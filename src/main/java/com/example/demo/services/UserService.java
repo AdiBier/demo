@@ -1,11 +1,26 @@
 package com.example.demo.services;
 
+import com.example.demo.models.Patient;
 import com.example.demo.models.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
-    // Własne metody
+
     void save(User user);
 
-    boolean isUniqueLogin(String login);
+    Page<User> getAllUsers(Pageable pageable);
+
+    User getUser(Long id);
+
+    User getRole(Long id);
+
+    void saveUser(User user);
+
+    User getById(Long id);
+
+    void delete(Long id);
+
+    boolean exists(Long id);
 }

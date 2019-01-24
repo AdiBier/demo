@@ -65,9 +65,6 @@ public class UserController {
         return "/users/uform";
     }
 
-
-
-
     @RequestMapping(value={"/users/add", "/users/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("user") User user, BindingResult errors){
 

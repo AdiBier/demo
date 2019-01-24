@@ -10,7 +10,7 @@ import java.util.List;
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     //TODO someone
-    // Visit findById(Long id);
+  //  Visit findById(Long id);
     Visit getVisitById(Long id);
 
     Page<Visit> findVisitsByPatient_Id(Long patient_id, Pageable pageable);

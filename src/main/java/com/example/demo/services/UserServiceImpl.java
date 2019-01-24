@@ -1,14 +1,11 @@
 package com.example.demo.services;
 
-
-
-import com.example.demo.config.ProfileNames;
 import com.example.demo.repositories.RoleRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.models.Role;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -18,18 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
-/**
- */
 @Service("userDetailsService")
-@Profile(ProfileNames.DATABASE)
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -79,9 +71,43 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(user);
     }
 
+
+
     @Override
-    public boolean isUniqueLogin(String username) {
-        return userRepository.findByUsername(username) == null;
+    public Page<com.example.demo.models.User> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
+
     }
+
+    @Override
+    public com.example.demo.models.User getUser(Long id) {
+        return null;
+    }
+
+    @Override
+    public com.example.demo.models.User getRole(Long id) {
+        return null;
+    }
+
+    @Override
+    public void saveUser(com.example.demo.models.User user) {
+
+    }
+
+    @Override
+    public com.example.demo.models.User getById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void delete(Long id){ userRepository.deleteById(id); }
+
+    @Override
+    public boolean exists(Long id){
+        return userRepository.existsById(id);
+    }
+
+
+
 }
 
