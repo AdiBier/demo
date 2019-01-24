@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+        <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+        <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    </div>
+</head>
+<body>
+
+<div th:fragment="header(pageName)">
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{/}" th:classappend="${pageName eq 'home'}?'active'">Strona główna</a>
+            </div>
+
+            <div id="navbar" class="collapse navbar-collapse ">
+                <!--przyklad linku do listy i dodawania-->
+                <!--<ul class="nav navbar-nav navbar-left">-->
+                <!--<li th:class="${pageName eq 'vehicleList'}? 'active'">-->
+                <!--<a th:href="@{/vehicleList.html(all)}">Lista pojazdów</a>-->
+                <!--</li>-->
+                <!--<li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${pageName eq 'custom'}? 'active'">-->
+                <!--<a th:href="@{/vehicleForm.html}">Dodaj pojazd</a>-->
+                <!--</li>-->
+                <!--</ul>-->
+                <ul class="nav navbar-nav navbar-right">
+                    <li sec:authorize="isAnonymous()">
+                        <a th:href="@{/registrationForm.html}">Zarejestruj</a>
+                    </li>
+                    <li sec:authorize="isAnonymous()"
+                        th:class="${pageName eq 'loginForm'}? 'active'">
+                        <a th:href="@{/login}">Zaloguj się</a>
+                    </li>
+                    <li sec:authorize="isAnonymous()"
+                        th:class="${pageName eq 'registerVisit'}? 'active'">
+                        <a th:href="@{/visits}">Rejestracja wizyty</a>
+                    </li>
+                    <li class="dropdown"> <!--TODO sec:authorize="isAuthenticated()" -->
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Pacjenci<span class="caret"></span>
+                        </a>
+                        <ul class="list-group dropdown-menu">
+                            <li>
+                                <a th:href="@{/patients}">Wyświetl liste pacjentow</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/patients/add}">Dodaj nowego pacjenta listy</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"> <!--TODO sec:authorize="isAuthenticated()" -->
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Użytkownicy<span class="caret"></span>
+                        </a>
+                        <ul class="list-group dropdown-menu">
+                            <li>
+                                <a th:href="@{/users}">Wyświetl liste użytkowników</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/users/add}">Dodaj nowego użytkownika</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"> <!--TODO sec:authorize="isAuthenticated()" -->
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Role<span class="caret"></span>
+                        </a>
+                        <ul class="list-group dropdown-menu">
+                            <li>
+                                <a th:href="@{/roles}">Wyświetl liste ról</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/roles/add}">Dodaj nową rolę</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <label style="color:grey; margin-top: 15px;">
+                            Witaj <span sec:authentication="name"/>!
+                        </label>
+                    </li>
+                    <li class="dropdown">
+                        <!--sec:authorize="isAuthenticated()"-->
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Zarządzaj cennikiem<span class="caret"></span>
+                        </a>
+                        <ul class="list-group dropdown-menu">
+                            <li>
+                                <a th:href="@{/treatments}">Wyświetl cennik</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/treatments/add}">Dodaj nowy zabieg do listy</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li sec:authorize="isAuthenticated()">
+                        <a href="#" onclick="document.getElementById('logout').submit()">Wyloguj się</a>
+                        <form th:action="@{/logout}" id="logout" method="post" style="display: none;">
+
+                            <input
+                                    type="hidden"
+                                    th:name="${_csrf.parameterName}"
+                                    th:value="${_csrf.token}"/>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</div>
+
+</body>
+</html>

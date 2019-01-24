@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Lista wizyt pacjenta</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+
+    <H1 th:inline="text">Lista wizyt pacjenta [[${patient.firstName}]] [[${patient.lastName}]]</H1>
+
+    <div th:if="${visitsPage.hasContent() eq false}">
+        <span>Brak wizyt w bazie</span>
+    </div>
+    <div th:if="${visitsPage.hasContent() eq true}">
+
+
+
+        <span th:inline="text">
+           Baza zawiera [[${visitsPage.totalElements}]] wizytę/y
+        </span>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Data wizyty</th>
+                <th>Do zapłaty</th>
+                <th>Zapłacono</th>
+                <th>Utworzono</th>
+                <th>Data ostatniej modyfikacji</th>
+                <th>Dentysta</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="visit : ${visitsPage.content}">
+
+                <td th:inline="text">[[${#dates.format(visit.visitDate, 'dd-MM-yyyy HH:mm')}]]</td>
+                <td th:inline="text">[[${visit.getPrice()}]] zł</td>
+                <td th:inline="text">[[${visit.getPaid()}]] zł</td>
+                <td th:inline="text">[[${#dates.format(visit.createdDate, 'dd-MM-yyyy HH:mm')}]]</td>
+                <td th:inline="text">[[${#dates.format(visit.createdDate, 'dd-MM-yyyy HH:mm')}]]</td>
+                <td th:inline="text">[[${visit.dentist.patient.firstName}]] [[${visit.dentist.patient.lastName}]]</td>
+                <td >
+                    <a class="btn btn-danger" th:href="@{/visits/delete(id=${visit.id})}" th:text="Usuń"></a>
+                    <!--sec:authorize="hasRole('ROLE_ADMIN')"-->
+                    <a class="btn btn-success" th:href="@{/visits/edit(id=${visit.id})}" th:text="#{edit}"></a>
+                    <a class="btn btn-success" th:href="@{/scheduled_treatments/visit(visit_id=${visit.id})}">Zaplanowane zabiegi</a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div th:replace="shared/pagination :: pager('/visits/list/patient', ${visitsPage})"></div>
+
+    </div>
+
+    <a class="btn btn-success" href="/visits/add">Dodaj Nową Wizytę</a>
+
+
+</div>
+</body>
+</html>

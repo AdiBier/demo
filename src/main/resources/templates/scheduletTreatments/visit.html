@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title th:inline="text">Zabiegi zaplanowane dla wizyty z dnia [[${#dates.format(visit.visitDate, 'dd-MM-yyyy HH:mm')}]]</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+
+    <H1 th:inline="text">Zabiegi zaplanowane dla wizyty z dnia [[${#dates.format(visit.visitDate, 'dd-MM-yyyy HH:mm')}]]</H1><br/>
+    <H4 th:inline="text">Opłacono [[${paid}]]/[[${toPay}]] zł</H4>
+
+    <div th:if="${visit.scheduledTreatments.isEmpty()}">
+        <span>Brak zaplanowanych zabiegów w bazie</span>
+    </div>
+    <div th:unless="${visit.scheduledTreatments.isEmpty()}">
+
+
+
+        <span th:inline="text">
+           Baza zawiera [[${visit.scheduledTreatments.size()}]] zaplanowanych zabiegów
+        </span>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Nazwa zabiegu</th>
+                <th>Do zapłaty</th>
+                <th>Zapłacono</th>
+                <th>Status</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="scheduledTreatment : ${visit.scheduledTreatments}">
+
+                <td th:inline="text">[[${scheduledTreatment.treatment.name}]]</td>
+                <td th:inline="text">[[${scheduledTreatment.treatment.price}]] zł</td>
+                <td th:inline="text">[[${scheduledTreatment.paid}]] zł</td>
+                <td th:inline="text">[[${scheduledTreatment.status}]]</td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{/scheduled_treatments/delete(id=${scheduledTreatment.id})}" th:text="Usuń"></a>
+                    <a class="btn btn-success" th:href="@{/scheduled_treatments/edit(id=${scheduledTreatment.id})}" th:text="#{edit}"></a>
+                    <a class="btn btn-success" th:href="@{/scheduled_treatments/pay(id=${scheduledTreatment.id})}" th:unless="${scheduledTreatment.paid.equals(scheduledTreatment.treatment.price)}">Opłać zabieg</a>
+                    <a class="btn btn-success" th:href="@{/visit/details(id=${visit.id})}">Szczegóły wizyty</a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <a class="btn btn-success" href="/scheduled_treatments/add">Zaplanuj Nowy Zabieg</a>
+    <a class="btn btn-success" th:href="@{/scheduled_treatments/visit/pay(visit_id=${visit.id})}" th:if="${not paidFullPrice}">Opłać wszystkie zabiegi</a>
+
+
+</div>
+</body>
+</html>

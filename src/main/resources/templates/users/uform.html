@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Użytkownik</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div class="container">
+
+
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form th:method="POST" th:object="${user}" th:action="'/users/'+${action}">
+                <fieldset>
+                    <h1 th:text="#{${action}}"></h1>
+
+                    <div class="form-group">
+                        <input type="text" name="userName" th:value="*{username}"
+                               class="form-control" th:classappend="${#fields.hasErrors('username')}?'is-invalid'"
+                               placeholder="Login" required="true" autofocus="true"/>
+
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('username')}">
+                            <span th:each="err : ${#fields.errors('username')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="lastName" th:value="*{password}"
+                               class="form-control" th:classappend="${#fields.hasErrors('password')}?'is-invalid'"
+                               placeholder="hasło" required="true" autofocus="true"/>
+
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('password')}">
+                            <span th:each="err : ${#fields.errors('password')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <select th:field="*{patient}" class="form-control"
+                                th:classappend="${#fields.hasErrors('patient')}?'is-invalid'">
+                            <option value="-1">--wybierz pacjenta--</option>
+                            <option th:each="type : ${patient}"
+                                    th:value="${patient.id}"
+                                    th:text=" ${patient.firstName}"
+
+                            ></option>
+                        </select>
+                        <div class="error text-danger" th:if="${#fields.hasErrors('patient.id')}">
+                            <p th:each="err : ${#fields.errors('patient.id')}" th:text="${err}"></p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <select th:field="*{patient}" class="form-control"
+                                th:classappend="${#fields.hasErrors('patient')}?'is-invalid'">
+                            <option value="-1">--wybierz rolę--</option>
+                            <option th:each="type : ${patient}"
+                                    th:value="${patient.id}"
+                                    th:text=" ${patient.firstName}"
+
+                            ></option>
+                        </select>
+                        <div class="error text-danger" th:if="${#fields.hasErrors('patient.id')}">
+                            <p th:each="err : ${#fields.errors('patient.id')}" th:text="${err}"></p>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Zapisz"/>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <input type="hidden" th:field="*{id}"/>
+                            <input
+                                    type="hidden"
+                                    th:name="${_csrf.parameterName}"
+                                    th:value="${_csrf.token}"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

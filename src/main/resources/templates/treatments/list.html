@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Cennik</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+
+    <H1>Cennik</H1>
+
+    <div th:if="${treatmentsPage.hasContent() eq false}">
+        <span>Brak zabiegów w bazie</span>
+    </div>
+    <div th:if="${treatmentsPage.hasContent() eq true}">
+
+
+
+        <span th:inline="text">
+           Baza zawiera [[${treatmentsPage.totalElements}]] zabiegi/ów
+        </span>
+
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Nazwa</th>
+                <th>Cena</th>
+                <th>Dostępny</th>
+                <th>Opcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="treatment : ${treatmentsPage.content}">
+
+                <td>
+                    <a th:href="@{/treatments/details(id=${treatment.id})}" th:inline="text">[[${treatment.name}]]</a>
+                </td>
+                <td th:inline="text">[[${treatment.price}]] zł</td>
+                <td th:if="${treatment.active}" th:text="#{treatment.active.true}"></td>
+                <td th:unless="${treatment.active}" th:text="#{treatment.active.false}"></td>
+                <td >
+                    <a class="btn btn-danger" th:href="@{/treatments/delete(id=${treatment.id})}" th:text="Usuń"></a>
+                    <!--sec:authorize="hasRole('ROLE_ADMIN')"-->
+                    <a class="btn btn-success" th:href="@{/treatments/edit(id=${treatment.id})}" th:text="#{edit}"></a>
+                    <a class="btn btn-success" th:href="@{/treatments/change_active(id=${treatment.id})}">
+                        <span th:if="${treatment.active}">Dezaktywuj</span>
+                        <span th:unless="${treatment.active}">Aktywuj</span>
+                    </a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div th:replace="shared/pagination :: pager('/treatments', ${treatmentsPage})"></div>
+
+    </div>
+
+    <a class="btn btn-success" href="/treatments/add" th:text="#{add_new( #{treatment})}"></a>
+
+
+</div>
+</body>
+</html>
