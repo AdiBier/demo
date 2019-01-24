@@ -35,7 +35,7 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public void delete(Long id) {
-        visitRepository.delete(id);
+        visitRepository.deleteById(id);
     }
 
     @Override
