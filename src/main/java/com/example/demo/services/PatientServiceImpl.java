@@ -41,8 +41,6 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.save(patient);
     }
 
-    //TODO HALO
-
     @Override
     public Patient getById(Long id) {
         return patientRepository.findById(id).orElse(null);

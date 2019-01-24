@@ -22,7 +22,7 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findAll(pageable);
     }
 
-    //TODO
+
     @Override
     public Role getRole(Long id) {
         return roleRepository.findById(id).orElse(null);
@@ -32,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void saveRole(Role role) { roleRepository.save(role);
     }
-    //TODO SOMEONE
+
     @Override
     public Role getById(Long id) {
         return roleRepository.findById(id).orElse(null);
