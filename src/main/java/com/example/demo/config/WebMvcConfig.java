@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
 
 @Configuration
+@EntityScan
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/static/",
