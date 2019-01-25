@@ -34,37 +34,34 @@ public class RepositoriesInitializer {
 
         return () -> {
 
-            if(roleRepository.findAll().isEmpty() == true){
+            if (roleRepository.findAll().isEmpty() == true) {
                 try {
-                    Role roleUser = roleRepository.save(new Role("ROLE_USER"));
-                    Role roleAdmin = roleRepository.save(new Role("ROLE_ADMIN"));
-                    Patient userPatient = patientRepository.save(new Patient(null, "First", "User"));
-                    Patient adminPatient = patientRepository.save(new Patient(null, "Second", "Admin"));
-                    //TODO
-//                    User user = new User(
-//                            null,
-//                            new HashSet<>(Arrays.asList(roleUser)),
-//                            userPatient,
-//                            "user",
-//                            passwordEncoder.encode("user"),
-//                            null,
-//                            true
-//                    );
-//                    user.setPasswordConfirm(null);
-//                    User admin = new User(
-//                            null,
-//                            new HashSet<>(Arrays.asList(roleAdmin)),
-//                            adminPatient,
-//                            "admin",
-//                            passwordEncoder.encode("admin"),
-//                            null,
-//                            true
-//                    );
-//                    admin.setPasswordConfirm(null);
-//
-//                    userRepository.save(user);
-//                    userRepository.save(admin);
-                }catch(Exception e){
+                    Role roleUser = new Role("ROLE_USER");
+                    roleRepository.save(roleUser);
+                    Role roleAdmin = new Role("ROLE_ADMIN");
+                    roleRepository.save(roleAdmin);
+                    Patient userPatient = new Patient(null, "First", "User");
+                    patientRepository.save(userPatient);
+                    Patient adminPatient = new Patient(null, "Second", "Admin");
+                    patientRepository.save(adminPatient);
+
+                    User user = new User();
+                    user.setUsername("user");
+                    user.setEnabled(true);
+                    user.setPatient(userPatient);
+                    user.setRoles(new HashSet<>(Arrays.asList(roleUser)));
+                    user.setPassword(passwordEncoder.encode("user"));
+
+                    User admin = new User();
+                    admin.setUsername("admin");
+                    admin.setEnabled(true);
+                    admin.setPatient(adminPatient);
+                    admin.setRoles(new HashSet<>(Arrays.asList(roleUser)));
+                    admin.setPassword(passwordEncoder.encode("admin"));
+
+                    userRepository.save(user);
+                    userRepository.save(admin);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
