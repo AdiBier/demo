@@ -27,7 +27,7 @@
             <tr>
                 <th>Imie i nazwisko</th>
                 <th>Nazwa uzytkownika</th>
-                <th>Opcje</th>
+                <th sec:authorize="hasRole('ROLE_DENTIST')">Opcje</th>
             </tr>
             </thead>
             <tbody>
@@ -40,19 +40,15 @@
                     <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.username}]]</a>
                 </td>
 
-                <td sec:authorize="isAuthenticated()">
+                <td sec:authorize="hasRole('ROLE_DENTIST')">
                     <span th:each="role: ${user.roles}">
                         <span th:text="${role.type}"/>
                     </span>
                 </td>
-
-
-                <td >
-                    <a class="btn btn-danger" th:href="@{/users/delete(id=${user.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
+                <td sec:authorize="hasRole('ROLE_ADMIN')" >
+                    <a class="btn btn-danger" th:href="@{/users/delete(id=${user.id})}" th:text="Usuń"></a>
                     <a class="btn btn-success" th:href="@{/users/edit(id=${user.id})}" th:text="Edytuj"></a>
-
                 </td>
-
             </tr>
 
             </tbody>
@@ -64,7 +60,7 @@
 
 
 
-    <a class="btn btn-success" href="/users/add" >Dodaj nowego użytkownika</a>
+    <a sec:authorize="hasRole('ROLE_DENTIST')" class="btn btn-success" href="/users/add" >Dodaj nowego użytkownika</a>
 </div>
 </body>
 </html>
