@@ -20,6 +20,8 @@ public interface UserService extends UserDetailsService {
 
     User getById(Long id);
 
+    User getUserByUsername(String username);
+
     void delete(Long id);
 
     boolean exists(Long id);

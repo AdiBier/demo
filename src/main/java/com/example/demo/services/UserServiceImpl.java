@@ -103,6 +103,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public com.example.demo.models.User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     public void delete(Long id){ userRepository.deleteById(id); }
 
     @Override

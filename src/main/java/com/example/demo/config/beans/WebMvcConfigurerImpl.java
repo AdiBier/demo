@@ -22,7 +22,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/statics/**")
+        registry.addResourceHandler("/static/**")
                 .addResourceLocations("/resources/")
                 .setCachePeriod(60*24);
         registry.addResourceHandler("/webjars/**")

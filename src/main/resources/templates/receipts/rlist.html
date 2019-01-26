@@ -33,7 +33,7 @@
             <tr th:each="receipt : ${receiptsPage.content}">
 
                 <td>
-                    <a th:href="@{/receipts/details(id=${receipt.id})}" th:inline="text">[[${receipt.createdDate}]]</a>
+                    <a th:href="@{/receipts/details(id=${receipt.id})}" th:inline="text">[[${#dates.format(receipt.createdDate, 'dd-MM-yyyy')}]]</a>
                 </td>
                 <td>
                     <a th:href="@{/receipts/details(id=${receipt.id})}" th:inline="text">[[${receipt.patient.firstName}]] [[${receipt.patient.lastName}]]</a>

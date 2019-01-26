@@ -56,7 +56,6 @@ public class TreatmentsController {
 
 
         }
-
         model.addAttribute("treatment",treatment);
 
         return "treatments/form";
