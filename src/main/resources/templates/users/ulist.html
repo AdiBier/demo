@@ -25,35 +25,32 @@
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
-                <th>Imie</th>
-                <th>Nazwisko</th>
-                <th>Username</th>
-                <th sec:authorize="hasRole('ROLE_DENTIST')">Opcje</th>
+                <th>Imie i nazwisko</th>
+                <th>Nazwa uzytkownika</th>
+                <th>Opcje</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="user : ${userListPage.content}">
 
                 <td>
-                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.firstName}]]</a>
-                </td>
-                <td>
-                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.lastName}]]</a>
+                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.firstName + " " + user.patient.lastName}]]</a>
                 </td>
                 <td>
                     <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.username}]]</a>
                 </td>
 
-                <td>
-                    <span sec:authorize="hasRole('ROLE_DENTIST')" th:each="role: ${user.roles}">
+                <td sec:authorize="isAuthenticated()">
+                    <span th:each="role: ${user.roles}">
                         <span th:text="${role.type}"/>
                     </span>
                 </td>
 
 
-                <td sec:authorize="hasRole('ROLE_ADMIN')" >
-                    <a class="btn btn-danger" th:href="@{/users/delete(id=${user.id})}" th:text="Usuń"></a>
+                <td >
+                    <a class="btn btn-danger" th:href="@{/users/delete(id=${user.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
                     <a class="btn btn-success" th:href="@{/users/edit(id=${user.id})}" th:text="Edytuj"></a>
+
                 </td>
 
             </tr>
@@ -67,7 +64,7 @@
 
 
 
-    <a sec:authorize="hasRole('ROLE_DENTIST')" class="btn btn-success" href="/users/add" >Dodaj nowego użytkownika</a>
+    <a class="btn btn-success" href="/users/add" >Dodaj nowego użytkownika</a>
 </div>
 </body>
 </html>
