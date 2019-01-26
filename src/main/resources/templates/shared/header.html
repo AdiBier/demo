@@ -31,18 +31,21 @@
                 <!--</li>-->
                 <!--</ul>-->
                 <ul class="nav navbar-nav navbar-right">
+
                     <li sec:authorize="isAnonymous()">
                         <a th:href="@{/registrationForm.html}">Zarejestruj</a>
                     </li>
+
                     <li sec:authorize="isAnonymous()"
                         th:class="${pageName eq 'loginForm'}? 'active'">
                         <a th:href="@{/login}">Zaloguj się</a>
                     </li>
+
                     <li sec:authorize="isAnonymous()"
                         th:class="${pageName eq 'registerVisit'}? 'active'">
                         <a th:href="@{/visits}">Rejestracja wizyty</a>
                     </li>
-                    <li class="dropdown" sec:authorize="isAuthenticated()"> <!--TODO sec:authorize="isAuthenticated()" -->
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Pacjenci<span class="caret"></span>
                         </a>
@@ -55,7 +58,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown" sec:authorize="isAuthenticated()"> <!--TODO sec:authorize="isAuthenticated()" -->
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')" >
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Użytkownicy<span class="caret"></span>
                         </a>
@@ -64,11 +67,16 @@
                                 <a th:href="@{/users}">Wyświetl liste użytkowników</a>
                             </li>
                             <li>
-                                <a th:href="@{/users/add}">Dodaj nowego użytkownika</a>
+                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/add}">Dodaj nowego użytkownika</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown" sec:authorize="isAuthenticated()"> <!--TODO sec:authorize="isAuthenticated()" -->
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/users}">
+                            Użytkownicy
+                        </a>
+                    </li>
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Role<span class="caret"></span>
                         </a>
@@ -86,8 +94,19 @@
                             Witaj <span sec:authentication="name"/>!
                         </label>
                     </li>
-                    <li class="dropdown" sec:authorize="isAuthenticated()">
-                        <!--sec:authorize="isAuthenticated()"-->
+                    <!--TODO pierwsza rzecz -->
+                    <!--<div th:switch="${user.role}">-->
+                        <!--<p th:case = " 'admin'"> admin to widzi</p>-->
+                        <!--<p th:case ="#{role.manager}"> admin to widzi</p>-->
+                        <!--<p th:case="*"> Niezalogowany</p>-->
+                    <!--</div>-->
+
+                    <li>
+                    <a th:href="@{/treatments}">
+                        Wyświetl cennik
+                    </a>
+                    </li>
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Zarządzaj cennikiem<span class="caret"></span>
                         </a>
@@ -96,11 +115,10 @@
                                 <a th:href="@{/treatments}">Wyświetl cennik</a>
                             </li>
                             <li>
-                                <a th:href="@{/treatments/add}">Dodaj nowy zabieg do listy</a>
+                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/treatments/add}">Dodaj nowy zabieg do listy</a>
                             </li>
                         </ul>
                     </li>
-
                     <li sec:authorize="isAuthenticated()">
                         <a href="#" onclick="document.getElementById('logout').submit()">Wyloguj się</a>
                         <form th:action="@{/logout}" id="logout" method="post" style="display: none;">

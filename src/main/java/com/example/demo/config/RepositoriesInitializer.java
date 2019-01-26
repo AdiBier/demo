@@ -56,7 +56,7 @@ public class RepositoriesInitializer {
                     admin.setUsername("admin");
                     admin.setEnabled(true);
                     admin.setPatient(adminPatient);
-                    admin.setRoles(new HashSet<>(Arrays.asList(roleUser)));
+                    admin.setRoles(new HashSet<>(Arrays.asList(roleAdmin)));
                     admin.setPassword(passwordEncoder.encode("admin"));
 
                     userRepository.save(user);

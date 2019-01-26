@@ -17,8 +17,6 @@
     </div>
     <div th:if="${treatmentsPage.hasContent() eq true}">
 
-
-
         <span th:inline="text">
            Baza zawiera [[${treatmentsPage.totalElements}]] zabiegi/ów
         </span>
@@ -29,7 +27,7 @@
                 <th>Nazwa</th>
                 <th>Cena</th>
                 <th>Dostępny</th>
-                <th>Opcje</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">Opcje</th>
             </tr>
             </thead>
             <tbody>
@@ -39,12 +37,15 @@
                     <a th:href="@{/treatments/details(id=${treatment.id})}" th:inline="text">[[${treatment.name}]]</a>
                 </td>
                 <td th:inline="text">[[${treatment.price}]] zł</td>
-                <td th:if="${treatment.active}" th:text="#{treatment.active.true}"></td>
-                <td th:unless="${treatment.active}" th:text="#{treatment.active.false}"></td>
-                <td >
+                <!--<td th:if="${treatment.active}" th:text="#{treatment.active.true}"></td>-->
+                <td th:if="${treatment.active}">Dostępny</td>
+                <!--<td th:unless="${treatment.active}" th:text="#{treatment.active.false}"></td>-->
+                <td th:unless="${treatment.active}">Niedostępny</td>
+                <td sec:authorize="hasRole('ROLE_ADMIN')" >
                     <a class="btn btn-danger" th:href="@{/treatments/delete(id=${treatment.id})}" th:text="Usuń"></a>
-                    <!--sec:authorize="hasRole('ROLE_ADMIN')"-->
-                    <a class="btn btn-success" th:href="@{/treatments/edit(id=${treatment.id})}" th:text="#{edit}"></a>
+                    <!--<a class="btn btn-warning" th:href="@{/treatments/edit(id=${treatment.id})}" th:text="#{edit}"></a>-->
+                    <a class="btn btn-warning" th:href="@{/treatments/edit(id=${treatment.id})}">Edytuj</a>
+
                     <a class="btn btn-success" th:href="@{/treatments/change_active(id=${treatment.id})}">
                         <span th:if="${treatment.active}">Dezaktywuj</span>
                         <span th:unless="${treatment.active}">Aktywuj</span>
@@ -60,7 +61,8 @@
 
     </div>
 
-    <a class="btn btn-success" href="/treatments/add" th:text="#{add_new( #{treatment})}"></a>
+    <!--<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-success" href="/treatments/add"th:text="#{add_new( #{treatment})}" ></a>-->
+    <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-success" href="/treatments/add" >Dodaj</a>
 
 
 </div>

@@ -13,7 +13,7 @@
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <form th:method="POST" th:object="${treatment}" th:action="'/treatments/'+${action}">
                 <fieldset>
-                    <h1 th:text="#{${action}}"></h1>
+                    <h1 th:text="${action}"></h1>
 
                     <div class="form-group">
                         <input type="text" name="name" th:value="*{name}"
@@ -38,9 +38,11 @@
                     <div class="form-group">
                         <select th:field="*{active}" class="form-control"
                                 th:classappend="${#fields.hasErrors('active')}?'is-invalid'">
-                            <option value="false" disabled="true">Aktywny</option>
-                            <option th:value="true" th:text="#{treatment.active.true}"/>
-                            <option th:value="false" th:text="#{treatment.active.false}"/>
+                            <option value="false" disabled="true">Wybierz czy zabieg jest Aktywny</option>
+                            <option th:value="true" th:text="Dostępny"/>
+                            <option th:value="false" th:text="Niedostępny"/>
+                            <!--<option th:value="true" th:text="#{treatment.active.true}"/>-->
+                            <!--<option th:value="false" th:text="#{treatment.active.false}"/>-->
                         </select>
                         <div class="error text-danger" th:if="${#fields.hasErrors('active')}">
                             <p th:each="err : ${#fields.errors('active')}" th:text="${err}"></p>
