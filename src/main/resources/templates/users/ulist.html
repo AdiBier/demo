@@ -25,9 +25,8 @@
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
-                <th>Imie</th>
-                <th>Nazwisko</th>
-                <th>Username</th>
+                <th>Imie i nazwisko</th>
+                <th>Nazwa uzytkownika</th>
                 <th>Opcje</th>
             </tr>
             </thead>
@@ -35,18 +34,15 @@
             <tr th:each="user : ${userListPage.content}">
 
                 <td>
-                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.firstName}]]</a>
-                </td>
-                <td>
-                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.lastName}]]</a>
+                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.firstName + " " + user.patient.lastName}]]</a>
                 </td>
                 <td>
                     <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.username}]]</a>
                 </td>
 
                 <td sec:authorize="isAuthenticated()">
-                    <span th:each="role: ${#authentication.getAuthorities()}">
-                        <span th:text="${role}"/>
+                    <span th:each="role: ${user.roles}">
+                        <span th:text="${role.type}"/>
                     </span>
                 </td>
 

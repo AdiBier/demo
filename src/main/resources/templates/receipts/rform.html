@@ -21,7 +21,7 @@
                 <option value="-1">--wybierz pacjenta--</option>
                 <option th:each="oPatient : ${patientsList}"
                         th:value="${oPatient.id}"
-                        th:text=" ${oPatient.firstName}"
+                        th:text=" ${oPatient.firstName + ' ' + oPatient.lastName}"
                 />
             </select>
             <div class="error text-danger" th:if="${#fields.hasErrors('patient.id')}">

@@ -83,6 +83,7 @@ public class UserController {
         }
         return "redirect:/users";
     }
+
     private String prepareQueryString(String queryString) {//np., did=20&page=2&size=20
         return queryString.substring(queryString.indexOf("&")+1);//obcinamy parametr did, bo inaczej po przekierowaniu znowu będzie wywołana metoda deleteVihicle
     }
