@@ -40,10 +40,14 @@ public class RepositoriesInitializer {
                     roleRepository.save(roleUser);
                     Role roleAdmin = new Role("ROLE_ADMIN");
                     roleRepository.save(roleAdmin);
+                    Role roleDentist = new Role("ROLE_DENTIST");
+                    roleRepository.save(roleDentist);
                     Patient userPatient = new Patient(null, "First", "User");
                     patientRepository.save(userPatient);
                     Patient adminPatient = new Patient(null, "Second", "Admin");
                     patientRepository.save(adminPatient);
+                    Patient dentistPatient = new Patient(null, "Third", "Dentist");
+                    patientRepository.save(dentistPatient);
 
                     User user = new User();
                     user.setUsername("user");
@@ -52,15 +56,23 @@ public class RepositoriesInitializer {
                     user.setRoles(new HashSet<>(Arrays.asList(roleUser)));
                     user.setPassword(passwordEncoder.encode("user"));
 
+                    User dentist = new User();
+                    dentist.setUsername("dentist");
+                    dentist.setEnabled(true);
+                    dentist.setPatient(dentistPatient);
+                    dentist.setRoles(new HashSet<>(Arrays.asList(roleDentist, roleUser)));
+                    dentist.setPassword(passwordEncoder.encode("dentist"));
+
                     User admin = new User();
                     admin.setUsername("admin");
                     admin.setEnabled(true);
                     admin.setPatient(adminPatient);
-                    admin.setRoles(new HashSet<>(Arrays.asList(roleAdmin)));
+                    admin.setRoles(new HashSet<>(Arrays.asList(roleDentist, roleUser, roleAdmin)));
                     admin.setPassword(passwordEncoder.encode("admin"));
 
                     userRepository.save(user);
                     userRepository.save(admin);
+                    userRepository.save(dentist);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

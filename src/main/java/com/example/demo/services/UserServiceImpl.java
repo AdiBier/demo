@@ -71,7 +71,10 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(user);
     }
 
-
+    @Override
+    public boolean isUniqueLogin(String username) {
+        return userRepository.findByUsername(username) == null;
+    }
 
     @Override
     public Page<com.example.demo.models.User> getAllUsers(Pageable pageable) {
