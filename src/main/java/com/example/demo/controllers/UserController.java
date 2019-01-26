@@ -49,7 +49,6 @@ public class UserController {
     public String showForm(Model model, Optional<Long> id){
         User user;
 
-
         if(id.isPresent()){
             Long roleId = id.get();
             model.addAttribute("action", "edit");

@@ -23,4 +23,6 @@ public interface UserService extends UserDetailsService {
     void delete(Long id);
 
     boolean exists(Long id);
+
+    boolean isUniqueLogin(String login);
 }

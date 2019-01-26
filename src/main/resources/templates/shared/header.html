@@ -30,16 +30,7 @@
                 <!--<a th:href="@{/vehicleForm.html}">Dodaj pojazd</a>-->
                 <!--</li>-->
                 <!--</ul>-->
-                <ul class="nav navbar-nav navbar-right">
-
-                    <li sec:authorize="isAnonymous()">
-                        <a th:href="@{/registrationForm.html}">Zarejestruj</a>
-                    </li>
-
-                    <li sec:authorize="isAnonymous()"
-                        th:class="${pageName eq 'loginForm'}? 'active'">
-                        <a th:href="@{/login}">Zaloguj się</a>
-                    </li>
+                <ul class="nav navbar-nav navbar-left">
 
                     <li sec:authorize="isAnonymous()"
                         th:class="${pageName eq 'registerVisit'}? 'active'">
@@ -58,7 +49,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')" >
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Użytkownicy<span class="caret"></span>
                         </a>
@@ -67,7 +58,8 @@
                                 <a th:href="@{/users}">Wyświetl liste użytkowników</a>
                             </li>
                             <li>
-                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/add}">Dodaj nowego użytkownika</a>
+                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/add}">Dodaj nowego
+                                    użytkownika</a>
                             </li>
                         </ul>
                     </li>
@@ -89,22 +81,18 @@
                             </li>
                         </ul>
                     </li>
-                    <li sec:authorize="isAuthenticated()">
-                        <label style="color:grey; margin-top: 15px;">
-                            Witaj <span sec:authentication="name"/>!
-                        </label>
-                    </li>
+
                     <!--TODO pierwsza rzecz -->
                     <!--<div th:switch="${user.role}">-->
-                        <!--<p th:case = " 'admin'"> admin to widzi</p>-->
-                        <!--<p th:case ="#{role.manager}"> admin to widzi</p>-->
-                        <!--<p th:case="*"> Niezalogowany</p>-->
+                    <!--<p th:case = " 'admin'"> admin to widzi</p>-->
+                    <!--<p th:case ="#{role.manager}"> admin to widzi</p>-->
+                    <!--<p th:case="*"> Niezalogowany</p>-->
                     <!--</div>-->
 
                     <li>
-                    <a th:href="@{/treatments}">
-                        Wyświetl cennik
-                    </a>
+                        <a th:href="@{/treatments}">
+                            Wyświetl cennik
+                        </a>
                     </li>
                     <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -115,9 +103,25 @@
                                 <a th:href="@{/treatments}">Wyświetl cennik</a>
                             </li>
                             <li>
-                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/treatments/add}">Dodaj nowy zabieg do listy</a>
+                                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/treatments/add}">Dodaj nowy zabieg
+                                    do listy</a>
                             </li>
                         </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li sec:authorize="isAnonymous()">
+                        <a th:href="@{/registrationForm.html}">Zarejestruj</a>
+                    </li>
+
+                    <li sec:authorize="isAnonymous()"
+                        th:class="${pageName eq 'loginForm'}? 'active'">
+                        <a th:href="@{/login}">Zaloguj się</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <label style="color:grey; margin-top: 15px;">
+                            Witaj <span sec:authentication="name"/>!
+                        </label>
                     </li>
                     <li sec:authorize="isAuthenticated()">
                         <a href="#" onclick="document.getElementById('logout').submit()">Wyloguj się</a>
