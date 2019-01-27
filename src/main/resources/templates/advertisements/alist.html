@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Lista ogłoszeń</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+<!--//TODO ADRIAN-->
+<!--<div id="main" class="container">-->
+
+    <!--<H1>Ogłoszenia</H1>-->
+
+    <!--<div th:if="${advertisementsPage.hasContent() eq false}">-->
+        <!--<span>Brak ogłoszeń</span>-->
+    <!--</div>-->
+    <!--<div th:if="${advertisementsPage.hasContent() eq true}">-->
+
+        <!--<span th:inline="text">-->
+           <!--Baza zawiera [[${advertisementsPage.totalElements}]] ogłoszeń-->
+        <!--</span>-->
+
+        <!--<table class="table table-striped">-->
+            <!--<thead class="thead-dark">-->
+            <!--<tr>-->
+                <!--<th>Data wystawienia</th>-->
+                <!--<th>Pacjent</th>-->
+                <!--<th>Wystawiający</th>-->
+                <!--<th>Opcje</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr th:each="receipt : ${advertisementsPage.content}">-->
+
+                <!--<td>-->
+                    <!--<a th:href="@{/advertisements/adetails(id=${advertisement.id})}" th:inline="text">[[${#dates.format(receipt.createdDate, 'dd-MM-yyyy')}]]</a>-->
+                <!--</td>-->
+                <!--&lt;!&ndash;<td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a th:href="@{/advertisements/adetails(id=${advertisement.id})}" th:inline="text">[[${receipt.patient.firstName}]] [[${receipt.patient.lastName}]]</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                <!--&lt;!&ndash;<td>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a th:href="@{/advertisements/adetails(id=${advertisement.id})}" th:inline="text">[[${receipt.dentist.patient.firstName}]] [[${receipt.dentist.patient.lastName}]]</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</td>&ndash;&gt;-->
+
+                <!--<td >-->
+                    <!--<a class="btn btn-danger" th:href="@{/advertisements/delete(id=${advertisement.id})}" th:text="Usuń"></a>-->
+                    <!--<a class="btn btn-success" th:href="@{/advertisements/edit(id=${advertisement.id})}" th:text="Edytuj"></a>-->
+
+                <!--</td>-->
+
+            <!--</tr>-->
+
+            <!--</tbody>-->
+        <!--</table>-->
+
+        <!--<div th:replace="shared/pagination :: pager('/patients', ${receiptsPage})"></div>-->
+
+    <!--</div>-->
+
+
+
+    <!--<a class="btn btn-success" href="/receipts/add" > Dodaj Ogłoszenie </a>a-->
+</div>
+</body>
+</html>

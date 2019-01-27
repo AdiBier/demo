@@ -35,82 +35,57 @@ public class PatientsListController {
         return "users/pform";
     }
 
-    @RequestMapping(value="/patients", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value="/patients")
     public String showPatientList(Model model, Pageable pageable){
         model.addAttribute("patientListPage", patientService.getAllPatients(pageable));
         return "patients/plist";
-
-
     }
-
-    @Secured("IS_AUTHENTICATED_FULLY")
-    @RequestMapping(value="/patients/plist", params = "id", method = RequestMethod.GET)
-    public String showPatientDetails(Model model, Long id){
+    // params = "id", method = RequestMethod.GET
+    @RequestMapping(path="/patients/details")
+    public String details(Model model, Long id){
         //log.info("Pokazywanie szczegółów");
-        model.addAttribute("patient", patientService.getPatient(id));
-        return "PatientDetails";
+        Patient patient = patientService.getPatient(id);
+        model.addAttribute("patient", patient);
+        return "patients/pdetails";
     }
-
-
-
-   /* @RequestMapping(path = "/patients")
-    public String index(Model model, Pageable pageable) {
-        List<Patient> patients = new ArrayList<>();
-
-
-        Page page =  new PageImpl<Patient>(patients, pageable, patients.size());
-
-        model.addAttribute("patientsPage", page);
-
-        return "patients/plist";
-    }*/
 
     @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id){
         Patient patient;
-
-
         if(id.isPresent()){
-            Long patientId = id.get();
             model.addAttribute("action", "edit");
-            patient = patientService.getById(patientId);
+            patient = patientService.getById(id.get());
         } else {
             model.addAttribute("action", "add");
             patient = new Patient();
-
         }
-
         model.addAttribute("patient",patient);
-
         return "/patients/pform";
     }
 
-    @RequestMapping(value={"/patients/add2", "/patients/edit2"}, method= RequestMethod.GET)
-    public String showForm2(Model model, Optional<Long> id){
-        Patient patient;
-
-
-        if(id.isPresent()){
-            Long patientId = id.get();
-            model.addAttribute("action", "edit");
-            patient = patientService.getById(patientId);
-        } else {
-            model.addAttribute("action", "add");
-            patient = new Patient();
-
-        }
-
-        model.addAttribute("patient",patient);
-
-        return "/users/add";
-    }
-
+//    @RequestMapping(value={"/patients/add2", "/patients/edit2"}, method= RequestMethod.GET)
+//    public String showForm2(Model model, Optional<Long> id){
+//        Patient patient;
+//
+//        if(id.isPresent()){
+//            Long patientId = id.get();
+//            model.addAttribute("action", "edit");
+//            patient = patientService.getById(patientId);
+//        } else {
+//            model.addAttribute("action", "add");
+//            patient = new Patient();
+//        }
+//        model.addAttribute("patient",patient);
+//
+//        return "/users/add";
+//    }
+    @Secured({"ROLE_ADMIN", "ROLE_DENTIST"})
     @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("patient") Patient patient, BindingResult errors){
 
-//        if(errors.hasErrors()){
-//            return "patients/form";
-//        }
+        if(errors.hasErrors()){
+            return "patients/pform";
+        }
         patientService.savePatient(patient);
         return "redirect:/patients";
     }

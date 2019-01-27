@@ -61,7 +61,7 @@ public class UserController {
 
         model.addAttribute("user",user);
 
-        return "/users/uform";
+        return "users/uform";
     }
 
     @RequestMapping(value={"/users/add", "/users/edit"}, method= RequestMethod.POST)

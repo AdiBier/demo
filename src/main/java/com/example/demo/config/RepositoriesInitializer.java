@@ -1,9 +1,6 @@
 package com.example.demo.config;
 
-import com.example.demo.models.Patient;
-import com.example.demo.models.Role;
-import com.example.demo.models.Treatment;
-import com.example.demo.models.User;
+import com.example.demo.models.*;
 import com.example.demo.repositories.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,8 @@ public class RepositoriesInitializer {
     private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AdvertisementRepository advertisementRepository;
 
     @Bean
     InitializingBean init() {
@@ -107,6 +106,21 @@ public class RepositoriesInitializer {
                     treatment6.setPrice(new BigDecimal(200));
                     treatment6.setActive(true);
                     treatmentRepository.save(treatment6);
+
+                    Advertisement advertisement1 = new Advertisement();
+                    advertisement1.setTitle("Pierwsze ogłoszenie testowe");
+                    advertisement1.setDescription("Treść ogłoszenia testowe.");
+                    advertisementRepository.save(advertisement1);
+
+                    Advertisement advertisement2 = new Advertisement();
+                    advertisement2.setTitle("WAZNE");
+                    advertisement2.setDescription("W dniach 18/12/18 - 24/12/18 nie pracujemy.");
+                    advertisementRepository.save(advertisement2);
+
+                    Advertisement advertisement3 = new Advertisement();
+                    advertisement3.setTitle("Ogloszenie informacyjne");
+                    advertisement3.setDescription("Prosze przed przyjsciem umyc dokladnie zabki.");
+                    advertisementRepository.save(advertisement3);
 
                     userRepository.save(user);
                     userRepository.save(admin);
