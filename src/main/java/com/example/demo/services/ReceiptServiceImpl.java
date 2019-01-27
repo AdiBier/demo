@@ -38,11 +38,6 @@ public class ReceiptServiceImpl implements ReceiptService{
     }
 
     @Override
-    public void add(Patient patient, User dentist, String description) {
-
-    }
-
-    @Override
     public boolean exists(Long id){
         return receiptRepository.existsById(id);
     }

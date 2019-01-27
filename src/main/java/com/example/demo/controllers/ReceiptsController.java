@@ -74,10 +74,14 @@ public class ReceiptsController {
         if(errors.hasErrors()){
             return "receipts/rform";
         }
-        receipt.setCreatedDate(new Date());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userName = authentication.getName();
-        receipt.setDentist(userService.getUserByUsername(userName));
+        if(receipt.getCreatedDate() == null){
+            receipt.setCreatedDate(new Date());
+        }
+        if(receipt.getDentist().getId() == null){
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userName = authentication.getName();
+            receipt.setDentist(userService.getUserByUsername(userName));
+        }
         receiptService.save(receipt);
         return "redirect:/receipts";
     }

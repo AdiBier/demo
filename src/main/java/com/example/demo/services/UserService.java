@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-    void save(User user);
-
     Page<User> getAllUsers(Pageable pageable);
 
     User getUser(Long id);
