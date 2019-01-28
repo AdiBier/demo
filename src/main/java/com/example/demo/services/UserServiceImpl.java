@@ -61,17 +61,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(com.example.demo.models.User user) {
-
-        Role userRole = roleRepository.findRoleByType(Role.Types.ROLE_USER);
-        List roles = Arrays.asList(userRole);
-        user.setRoles(new HashSet<>(roles));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setPasswordConfirm(null);//wyzerowanie jest potrzebne ze względu na walidację
-        userRepository.saveAndFlush(user);
-    }
-
-    @Override
     public boolean isUniqueLogin(String username) {
         return userRepository.findByUsername(username) == null;
     }
@@ -94,7 +83,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(com.example.demo.models.User user) {
-
+        Role userRole = roleRepository.findRoleByType("ROLE_USER");
+        List roles = Arrays.asList(userRole);
+        user.setRoles(new HashSet<>(roles));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPasswordConfirm(null);
+        user.setEnabled(true);
+        userRepository.saveAndFlush(user);
     }
 
     @Override

@@ -35,11 +35,17 @@ public class PatientsController {
         }
 
         patientService.savePatient(v);
-
-
         //do ukończenia!
         return "patients/list";//po udanym dodaniu/edycji przekierowujemy na listę
     }
+
+    @RequestMapping(value="/patients/details")
+    public String details(Model model, Long id){
+        Patient patient = patientService.getPatient(id);
+        model.addAttribute("patient", patient);
+        return "patients/pdetails";
+    }
+
     //TODO
     @RequestMapping(path = "/patient/register")
     public String register() {

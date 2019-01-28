@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.example.demo.validators.adnotations.UniqueUsername;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,14 +28,13 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-
-
     @Valid
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="patient_id", nullable = false)
     private Patient patient;
 
     @Size(min = 4, max = 36)
+    @UniqueUsername
     private String username;
 
     private String password;

@@ -19,8 +19,6 @@ public interface ReceiptService {
 
     void delete(Long id);
 
-    void add(Patient patient, User dentist, String description);
-
     Receipt save(Receipt receipt);
 
     boolean exists(Long id);
