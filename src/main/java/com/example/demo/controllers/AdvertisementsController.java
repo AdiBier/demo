@@ -59,9 +59,8 @@ public class AdvertisementsController {
         if(errors.hasErrors()){
             return "advertisements/rform";
         }
-
-        //TODO ADRIAN
-
+        //TODO wciaż null-a daje -_-
+        advertisementService.save(advertisement);
         return "redirect:/advertisements";
     }
 
@@ -71,7 +70,7 @@ public class AdvertisementsController {
         if(advertisementService.exist(id)){
             advertisementService.delete(id);
         }
-        return "redirect:/advertisement";
+        return "redirect:/advertisements";
     }
 
 }
