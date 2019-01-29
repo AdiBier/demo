@@ -71,9 +71,9 @@ public class ReceiptsController {
     @RequestMapping(value={"/receipts/add", "/receipts/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult errors){
 
-        if(errors.hasErrors()){
-            return "receipts/rform";
-        }
+//        if(errors.hasErrors()){
+//            return "receipts/rform";
+//        }
         if(receipt.getCreatedDate() == null){
             receipt.setCreatedDate(new Date());
         }

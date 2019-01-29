@@ -41,13 +41,13 @@ public class PatientsListController {
         return "patients/plist";
     }
     // params = "id", method = RequestMethod.GET
-    @RequestMapping(path="/patients/details")
-    public String details(Model model, Long id){
-        //log.info("Pokazywanie szczegółów");
-        Patient patient = patientService.getPatient(id);
-        model.addAttribute("patient", patient);
-        return "patients/pdetails";
-    }
+//    @RequestMapping(path="/patients/details")
+//    public String details(Model model, Long id){
+//        //log.info("Pokazywanie szczegółów");
+//        Patient patient = patientService.getPatient(id);
+//        model.addAttribute("patient", patient);
+//        return "patients/pdetails";
+//    }
 
     @RequestMapping(value={"/patients/add", "/patients/edit"}, method= RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id){

@@ -43,7 +43,7 @@
                 </td>
 
                 <td >
-                    <a class="btn btn-danger" th:href="@{/receipts/delete(id=${receipt.id})}" th:text="Usuń"></a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger" th:href="@{/receipts/delete(id=${receipt.id})}" th:text="Usuń"></a>
                     <a class="btn btn-success" th:href="@{/receipts/edit(id=${receipt.id})}" th:text="Edytuj"></a>
 
                 </td>
