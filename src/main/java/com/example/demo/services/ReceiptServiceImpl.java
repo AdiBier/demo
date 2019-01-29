@@ -50,4 +50,5 @@ public class ReceiptServiceImpl implements ReceiptService{
     public Receipt save(Receipt receipt) {
         return receiptRepository.save(receipt);
     }
+
 }
