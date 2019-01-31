@@ -41,6 +41,13 @@ public class UserController {
 
     }
 
+    @RequestMapping(path = "/users/details")
+    public String details(Model model, Long id) {
+        User user = userService.getUser(id);
+        model.addAttribute("user",user);
+        return "users/udetails";
+    }
+
     @Secured("IS_AUTHENTICATED_FULLY")
     @RequestMapping(value = "/users/ulist", params = "id", method = RequestMethod.GET)
     public String showUserDetails(Model model, Long id) {

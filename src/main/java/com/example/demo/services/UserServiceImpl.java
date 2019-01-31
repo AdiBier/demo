@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public com.example.demo.models.User getUser(Long id) {
-        return null;
+        return userRepository.getOne(id);
     }
 
     @Override

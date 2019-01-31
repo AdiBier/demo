@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 
+import com.example.demo.controllers.commands.VehicleFilter;
 import com.example.demo.models.Treatment;
 import com.example.demo.repositories.TreatmentRepository;
 import com.example.demo.services.TreatmentService;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -103,6 +105,23 @@ public class TreatmentsController {
             }
             treatmentService.delete(id);
         }
+        return "redirect:/treatments";
+    }
+
+    @ModelAttribute("searchCommand")
+    public VehicleFilter getSimpleSearch(){
+        return new VehicleFilter();
+    }
+
+    @GetMapping(value="/treatments/list", params = {"all"})
+    public String resetehicleList(@ModelAttribute("searchCommand") VehicleFilter search){
+        search.clear();
+        return "redirect:/treatments";
+    }
+
+    @RequestMapping(value="/treatments/list", method = {RequestMethod.GET, RequestMethod.POST})
+    public String showVehicleList(Model model, @ModelAttribute("searchCommand") VehicleFilter search, Pageable pageable){
+        model.addAttribute("treatmentsPage", treatmentService.getAllTreatments(pageable));
         return "redirect:/treatments";
     }
 }

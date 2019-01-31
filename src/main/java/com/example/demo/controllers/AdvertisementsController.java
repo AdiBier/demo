@@ -4,6 +4,7 @@ import com.example.demo.models.Advertisement;
 import com.example.demo.models.Receipt;
 import com.example.demo.services.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,8 @@ public class AdvertisementsController {
 
     @RequestMapping(path = "/advertisements")
     public String index(Model model, Pageable pageable){
-        model.addAttribute("advertisementsPage", advertisementService.getAllAdvertisements(pageable));
+        Page<Advertisement> advertisement  = advertisementService.getAllAdvertisements(pageable);
+        model.addAttribute("advertisementsPage", advertisement);
         return "advertisements/alist";
     }
 

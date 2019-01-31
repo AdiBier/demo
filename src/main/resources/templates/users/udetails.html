@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Recepty</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+    <H1>Uzytkownik</H1>
+    Id: <b th:text="${user.id}"></b><br/>
+    <a class="btn btn-success" href="/users">Wróc do listy</a>
+</div>
+</body>
+</html>

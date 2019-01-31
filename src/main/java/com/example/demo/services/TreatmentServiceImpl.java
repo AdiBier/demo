@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.controllers.commands.VehicleFilter;
 import com.example.demo.models.ScheduledTreatment;
 import com.example.demo.models.Treatment;
 import com.example.demo.repositories.ScheduledTreatmentRepository;
@@ -49,5 +50,18 @@ public class TreatmentServiceImpl implements TreatmentService {
     public boolean isAssignedToAnyScheduledTreatment(Long id) {
 
         return scheduledTreatmentRepository.findScheduledTreatmentByTreatment_Id(id)!=null;
+    }
+
+    @Override
+    public Page<Treatment> getSearch(VehicleFilter search, Pageable pageable) {
+        Page page;
+        if(search.isEmpty()){
+            page = treatmentRepository.findAll(pageable);
+        }else{
+            page = treatmentRepository.findAllVehiclesUsingFilter(search.getPhraseLIKE(), search.getMinPrice(), search.getMaxPrice(), pageable);
+        }
+
+        return page;
+
     }
 }
