@@ -26,7 +26,7 @@
             <thead class="thead-dark">
             <tr>
                 <th>Imie i nazwisko</th>
-                <th>Nazwa uzytkownika</th>
+                <th sec:authorize="hasRole('ROLE_DENTIST')">Nazwa uzytkownika</th>
                 <th sec:authorize="hasRole('ROLE_DENTIST')">Opcje</th>
             </tr>
             </thead>
@@ -37,12 +37,12 @@
                     <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.firstName + " " + user.patient.lastName}]]</a>
                 </td>
                 <td>
-                    <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.username}]]</a>
+                    <a sec:authorize="hasRole('ROLE_DENTIST')" th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.username}]]</a>
                 </td>
 
                 <td sec:authorize="hasRole('ROLE_DENTIST')">
-                    <span th:each="role: ${user.roles}">
-                        <span th:text="${role.type}"/>
+                    <span  th:each="role: ${user.roles}">
+                        <span  th:text="${role.type}"/>
                     </span>
                 </td>
                 <td sec:authorize="hasRole('ROLE_ADMIN')" >

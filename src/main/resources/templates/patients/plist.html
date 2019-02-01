@@ -41,8 +41,8 @@
                 </td>
 
                 <td >
-                    <a class="btn btn-danger" th:href="@{/patients/delete(id=${patient.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
-                    <a class="btn btn-success" th:href="@{/patients/edit(id=${patient.id})}" th:text="#{edit}"></a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger" th:href="@{/patients/delete(id=${patient.id})}" th:text="Usuń"></a>
+                    <a sec:authorize="hasRole('ROLE_DENTIST')" class="btn btn-success" th:href="@{/patients/edit(id=${patient.id})}" th:text="#{edit}"></a>
 
                 </td>
 

@@ -51,6 +51,21 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_DENTIST')">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Wystaw recepte<span class="caret"></span>
+                        </a>
+                        <ul class="list-group dropdown-menu">
+                            <li>
+                                <a th:href="@{/receipts}">Lista recept</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/receipts/add}">Dodaj nową recepte</a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="dropdown" sec:authorize="isAuthenticated()">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Użytkownicy<span class="caret"></span>
@@ -115,6 +130,13 @@
                             Witaj <span sec:authentication="name"/>!
                         </label>
                     </li>
+
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/advertisements}">
+                            Dodaj ogłoszenie
+                        </a>
+                    </li>
+
                     <li sec:authorize="isAuthenticated()">
                         <a href="#" onclick="document.getElementById('logout').submit()">Wyloguj się</a>
                         <form th:action="@{/logout}" id="logout" method="post" style="display: none;">

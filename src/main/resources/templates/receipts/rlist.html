@@ -2,7 +2,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <div th:replace="shared/header :: header-css"/>
-    <title>Lista pacjentów</title>
+    <title>Lista recept</title>
 </head>
 <body>
 <div th:replace="shared/header :: header('home')"/>
@@ -43,7 +43,7 @@
                 </td>
 
                 <td >
-                    <a class="btn btn-danger" th:href="@{/receipts/delete(id=${receipt.id})}" th:text="Usuń"></a> <!-- TODO sec:authorize="hasRole('ROLE_ADMIN')"-->
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger" th:href="@{/receipts/delete(id=${receipt.id})}" th:text="Usuń"></a>
                     <a class="btn btn-success" th:href="@{/receipts/edit(id=${receipt.id})}" th:text="Edytuj"></a>
 
                 </td>

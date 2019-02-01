@@ -36,7 +36,7 @@ public class PatientsController {
 
         patientService.savePatient(v);
         //do ukończenia!
-        return "patients/list";//po udanym dodaniu/edycji przekierowujemy na listę
+        return "patients/plist";//po udanym dodaniu/edycji przekierowujemy na listę
     }
 
     @RequestMapping(value="/patients/details")

@@ -2,14 +2,13 @@ package com.example.demo.controllers;
 
 import com.example.demo.models.Patient;
 import com.example.demo.models.Receipt;
-import com.example.demo.models.Treatment;
-import com.example.demo.models.User;
 import com.example.demo.services.PatientService;
 import com.example.demo.services.ReceiptService;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.beans.propertyeditors.CustomNumberEditor;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -24,11 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ReceiptsController {
@@ -71,9 +67,9 @@ public class ReceiptsController {
     @RequestMapping(value={"/receipts/add", "/receipts/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult errors){
 
-        if(errors.hasErrors()){
-            return "receipts/rform";
-        }
+//        if(errors.hasErrors()){
+//            return "receipts/rform";
+//        }
         if(receipt.getCreatedDate() == null){
             receipt.setCreatedDate(new Date());
         }
@@ -112,5 +108,4 @@ public class ReceiptsController {
         binder.setDisallowedFields("createdDate");//ze względu na bezpieczeństwo aplikacji to pole nie może zostać przesłane w formularzu
 
     }
-
 }

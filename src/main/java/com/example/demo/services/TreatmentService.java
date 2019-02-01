@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.controllers.commands.VehicleFilter;
 import com.example.demo.models.Treatment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,5 +18,7 @@ public interface TreatmentService {
     boolean exists(Long id);
 
     boolean isAssignedToAnyScheduledTreatment(Long id);
+
+    Page<Treatment> getSearch(VehicleFilter search, Pageable pageable);
 
 }
