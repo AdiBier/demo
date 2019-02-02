@@ -41,5 +41,6 @@ public class User {
 
     @Transient//nie będzie odwzorowana w db
     private String passwordConfirm;
+
     private boolean enabled = false;
 }

@@ -18,8 +18,6 @@ public class RepositoriesInitializer {
     @Autowired
     private TreatmentRepository treatmentRepository;
     @Autowired
-    private ScheduledTreatmentRepository scheduledTreatmentRepository;
-    @Autowired
     private PatientRepository patientRepository;
     @Autowired
     private UserRepository userRepository;
@@ -28,7 +26,7 @@ public class RepositoriesInitializer {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private AdvertisementRepository advertisementRepository;
+    private ReportRepository reportRepository;
 
     @Bean
     InitializingBean init() {
@@ -41,14 +39,10 @@ public class RepositoriesInitializer {
                     roleRepository.save(roleUser);
                     Role roleAdmin = new Role("ROLE_ADMIN");
                     roleRepository.save(roleAdmin);
-                    Role roleDentist = new Role("ROLE_DENTIST");
-                    roleRepository.save(roleDentist);
-                    Patient userPatient = new Patient(null, "First", "User");
+                    Patient userPatient = new Patient(null, "First", "User", "85040744983");
                     patientRepository.save(userPatient);
-                    Patient adminPatient = new Patient(null, "Second", "Admin");
+                    Patient adminPatient = new Patient(null, "Second", "Admin", "63010648114");
                     patientRepository.save(adminPatient);
-                    Patient dentistPatient = new Patient(null, "Third", "Dentist");
-                    patientRepository.save(dentistPatient);
 
                     User user = new User();
                     user.setUsername("user");
@@ -57,23 +51,16 @@ public class RepositoriesInitializer {
                     user.setRoles(new HashSet<>(Arrays.asList(roleUser)));
                     user.setPassword(passwordEncoder.encode("user"));
 
-                    User dentist = new User();
-                    dentist.setUsername("dentist");
-                    dentist.setEnabled(true);
-                    dentist.setPatient(dentistPatient);
-                    dentist.setRoles(new HashSet<>(Arrays.asList(roleDentist, roleUser)));
-                    dentist.setPassword(passwordEncoder.encode("dentist"));
-
                     User admin = new User();
                     admin.setUsername("admin");
                     admin.setEnabled(true);
                     admin.setPatient(adminPatient);
-                    admin.setRoles(new HashSet<>(Arrays.asList(roleDentist, roleUser, roleAdmin)));
+                    admin.setRoles(new HashSet<>(Arrays.asList(roleUser, roleAdmin)));
                     admin.setPassword(passwordEncoder.encode("admin"));
 
                     Treatment treatment1 = new Treatment();
                     treatment1.setName("Wybielenie zębów");
-                    treatment1.setPrice(new BigDecimal(1500));
+                    treatment1.setPrice(new BigDecimal(350));
                     treatment1.setActive(true);
                     treatmentRepository.save(treatment1);
 
@@ -107,24 +94,8 @@ public class RepositoriesInitializer {
                     treatment6.setActive(true);
                     treatmentRepository.save(treatment6);
 
-                    Advertisement advertisement1 = new Advertisement();
-                    advertisement1.setTitle("Pierwsze ogłoszenie testowe");
-                    advertisement1.setDescription("Treść ogłoszenia testowe.");
-                    advertisementRepository.save(advertisement1);
-
-                    Advertisement advertisement2 = new Advertisement();
-                    advertisement2.setTitle("WAZNE");
-                    advertisement2.setDescription("W dniach 18/12/18 - 24/12/18 nie pracujemy.");
-                    advertisementRepository.save(advertisement2);
-
-                    Advertisement advertisement3 = new Advertisement();
-                    advertisement3.setTitle("Ogloszenie informacyjne");
-                    advertisement3.setDescription("Prosze przed przyjsciem umyc dokladnie zabki.");
-                    advertisementRepository.save(advertisement3);
-
                     userRepository.save(user);
                     userRepository.save(admin);
-                    userRepository.save(dentist);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

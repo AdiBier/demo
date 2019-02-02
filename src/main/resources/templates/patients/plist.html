@@ -42,7 +42,7 @@
 
                 <td >
                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger" th:href="@{/patients/delete(id=${patient.id})}" th:text="Usuń"></a>
-                    <a sec:authorize="hasRole('ROLE_DENTIST')" class="btn btn-success" th:href="@{/patients/edit(id=${patient.id})}" th:text="#{edit}"></a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-success" th:href="@{/patients/form(id=${patient.id})}" th:text="Edytuj"></a>
 
                 </td>
 
@@ -57,7 +57,7 @@
 
 
 
-    <a class="btn btn-success" href="/patients/add" > Dodaj Pacjenta </a>
+    <a class="btn btn-success" href="/patients/form" > Dodaj Pacjenta </a>
 </div>
 </body>
 </html>

@@ -66,6 +66,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<com.example.demo.models.User> getAllUsersList() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public Page<com.example.demo.models.User> getAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
 
@@ -88,7 +93,6 @@ public class UserServiceImpl implements UserService {
         user.setRoles(new HashSet<>(roles));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setPasswordConfirm(null);
-        user.setEnabled(true);
         userRepository.saveAndFlush(user);
     }
 

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Recepta</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div class="container">
+
+    <div class="row" style="margin-top:20px">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form th:method="POST" th:object="${visit}" th:action='@{/visits/form}'>
+                <fieldset>
+                    <h1>Wizyta</h1>
+
+                    <div class="form-group">
+                        <div class='checkbox' style="left:25px;">
+                            <input type="checkbox" th:value="${paid}" th:id="paid" th:field="*{paid}"
+                                   th:classappend="${#fields.hasErrors('paid')}?'is-invalid'" autofocus="true"/>
+                            <label th:for="${paid}" style="font-weight: bold">Zapłacono?</label>
+                        </div>
+
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('paid')}">
+                            <span th:each="err : ${#fields.errors('paid')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="date" name="visitDate" th:value="${visitDate}"
+                               class="form-control" th:classappend="${#fields.hasErrors('visitDate')}?'is-invalid'"
+                               required="true" autofocus="true"/>
+
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('visitDate')}">
+                            <span th:each="err : ${#fields.errors('visitDate')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+        <div class="form-group">
+            <select th:field="*{patient.id}" class="form-control"
+                    th:classappend="${#fields.hasErrors('patient.id')}?'is-invalid'">
+                <option value="-1">--wybierz pacjenta--</option>
+                <option th:each="oPatient : ${patientsList}"
+                        th:value="${oPatient.id}"
+                        th:text=" ${oPatient.firstName + ' ' + oPatient.lastName + '(' + oPatient.PESEL + ')'}"
+                />
+            </select>
+            <div class="error text-danger" th:if="${#fields.hasErrors('patient.id')}">
+                <p th:each="err : ${#fields.errors('patient.id')}" th:text="${err}"></p>
+            </div>
+        </div>
+                    <div class="form-group">
+                        <select th:field="*{dentist.id}" class="form-control"
+                                th:classappend="${#fields.hasErrors('dentist.id')}?'is-invalid'">
+                            <option value="-1">--wybierz dentyste--</option>
+                            <option th:each="oDentist : ${dentistsList}"
+                                    th:value="${oDentist.id}"
+                                    th:text=" ${oDentist.patient.firstName + ' ' + oDentist.patient.lastName}"
+                            />
+                        </select>
+                        <div class="error text-danger" th:if="${#fields.hasErrors('dentist.id')}">
+                            <p th:each="err : ${#fields.errors('dentist.id')}" th:text="${err}"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div th:each="treatment : ${treatmentsList}" class='checkbox' style="left:25px;">
+                            <input th:id="${treatment}" type="checkbox" th:field="*{treatments}"
+                                   th:value="${treatment.id}"/>
+                            <label th:text="${treatment.name + ' (' + treatment.price + ' zł)'}" th:for="${treatment}"></label>
+                        </div>
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('treatments')}">
+                            <p th:each="err : ${#fields.errors('treatments')}" th:text="${err}"></p>
+                        </div>
+                    </div>
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Zapisz"/>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{dentist.id}"/>
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"/>
+            </div>
+        </div>
+        </fieldset>
+        </form>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

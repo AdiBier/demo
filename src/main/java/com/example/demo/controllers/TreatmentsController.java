@@ -73,7 +73,7 @@ public class TreatmentsController {
         if(id != null){
             Treatment oldTreatment = treatmentService.getById(id);
 
-            if(!oldTreatment.getPrice().equals(treatment.getPrice()) && treatmentService.isAssignedToAnyScheduledTreatment(id)){
+            if(!oldTreatment.getPrice().equals(treatment.getPrice())){
                 oldTreatment.setActive(false);
                 treatmentService.save(oldTreatment);
                 treatment.setId(null);
@@ -99,10 +99,6 @@ public class TreatmentsController {
     public String delete(Model model, Long id){
 
         if(treatmentService.exists(id)){
-            if(treatmentService.isAssignedToAnyScheduledTreatment(id)){
-                model.addAttribute("treatment",treatmentService.getById(id));
-                return "/treatments/can_not_delete";
-            }
             treatmentService.delete(id);
         }
         return "redirect:/treatments";

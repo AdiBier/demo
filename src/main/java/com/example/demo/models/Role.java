@@ -32,7 +32,6 @@ public class Role {
 
     public enum Types{
         ROLE_ADMIN,
-        ROLE_DENTIST,
         ROLE_USER
     }
 }

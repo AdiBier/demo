@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -23,5 +24,6 @@ public class Patient {
     @Column(name="last_name")
     @Size(min = 1, max = 50)
     private String lastName;
-
+    @PESEL
+    private String PESEL;
 }

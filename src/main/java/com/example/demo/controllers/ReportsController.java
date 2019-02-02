@@ -1,14 +1,11 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.Advertisement;
-import com.example.demo.models.Receipt;
-import com.example.demo.services.AdvertisementService;
+import com.example.demo.models.Report;
+import com.example.demo.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,56 +18,56 @@ import java.util.Optional;
 
 
 @Controller
-public class AdvertisementsController {
+public class ReportsController {
 
     @Autowired
-    private AdvertisementService advertisementService;
+    private ReportService reportService;
 
     @RequestMapping(path = "/advertisements")
     public String index(Model model, Pageable pageable){
-        Page<Advertisement> advertisement  = advertisementService.getAllAdvertisements(pageable);
+        Page<Report> advertisement  = reportService.getAllAdvertisements(pageable);
         model.addAttribute("advertisementsPage", advertisement);
-        return "advertisements/alist";
+        return "rlist";
     }
 
     @RequestMapping(path = "/advertisements/details")
     public String details(Model model, Long id) {
-        Advertisement advertisement = advertisementService.getAdvertisement(id);
-        model.addAttribute("advertisement",advertisement);
-        return "advertisement/adetails";
+        Report report = reportService.getAdvertisement(id);
+        model.addAttribute("advertisement", report);
+        return "report/adetails";
     }
 
     @RequestMapping(value={"/advertisements/add", "/advertisements/edit"}, method= RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id){
-        Advertisement advertisement;
+        Report report;
         if(id.isPresent()){
             model.addAttribute("action", "edit");
-            advertisement = advertisementService.getAdvertisement(id.get());
+            report = reportService.getAdvertisement(id.get());
         } else {
             model.addAttribute("action", "add");
-            advertisement = new Advertisement();
+            report = new Report();
         }
-        model.addAttribute("advertisement",advertisement);
-        return "advertisements/aform";
+        model.addAttribute("advertisement", report);
+        return "rform";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_DENTIST"})
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping(value={"/advertisements/add", "/advertisements/edit"}, method= RequestMethod.POST)
-    public String processForm(@Valid @ModelAttribute("advertisement") Advertisement advertisement, BindingResult errors){
+    public String processForm(@Valid @ModelAttribute("advertisement") Report report, BindingResult errors){
 
         if(errors.hasErrors()){
             return "advertisements/rform";
         }
         //TODO wciaż null-a daje -_-
-        advertisementService.save(advertisement);
+        reportService.save(report);
         return "redirect:/advertisements";
     }
 
     @RequestMapping(value="/advertisements/delete")
     public String delete(Model model, Long id){
 
-        if(advertisementService.exist(id)){
-            advertisementService.delete(id);
+        if(reportService.exist(id)){
+            reportService.delete(id);
         }
         return "redirect:/advertisements";
     }
