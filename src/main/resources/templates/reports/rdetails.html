@@ -2,15 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <div th:replace="shared/header :: header-css"/>
-    <title>Ogłoszenia</title>
+    <title>Raporty</title>
 </head>
 <body>
 <div th:replace="shared/header :: header('home')"/>
 
 <div id="main" class="container">
-
-    <!--TODO ADRIAN-->
-    <a class="btn btn-success" href="/advertisements">Wróc do listy</a>
+    <H1>Dane raportu</H1>
+    Id: <b th:text="${report.id}"></b><br/>
+    Pacjent: <b th:text="${report.patient.firstName + ' ' + report.patient.lastName}"></b><br/>
+    Wystawiający: <b th:text="${report.user.patient.firstName + ' ' + report.user.patient.lastName}"></b><br/>
+    Opis: <b th:text="${report.description}"></b><br/>
+    <a class="btn btn-success" href="/reports">Wróc do listy</a>
 </div>
 </body>
 </html>

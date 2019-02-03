@@ -7,10 +7,12 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "reports")
@@ -24,6 +26,21 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="created_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdDate;
+
+    @Valid
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="patient_id", nullable = false)
+    private Patient patient;
+
+    @Valid
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
+
     @Column(name="title")
     @Size(min = 1, max = 50)
     private String title;
@@ -32,10 +49,4 @@ public class Report {
     @Column(name="description", nullable = false)
     @Type(type = "text")
     private String description;
-
-    @Valid
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="patient_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
 }
