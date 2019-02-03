@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.models.Patient;
 import com.example.demo.models.Report;
 import com.example.demo.repositories.ReportRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReportServiceImpl implements ReportService {
 
+    @Autowired
     private ReportRepository reportRepository;
 
     @Override
@@ -34,6 +36,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void add(Patient patient, String title, String description) {
+
     }
 
     @Override

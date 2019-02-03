@@ -12,6 +12,8 @@
     Id: <b th:text="${report.id}"></b><br/>
     Pacjent: <b th:text="${report.patient.firstName + ' ' + report.patient.lastName}"></b><br/>
     Wystawiający: <b th:text="${report.user.patient.firstName + ' ' + report.user.patient.lastName}"></b><br/>
+    <br/>
+    Tytuł: <b th:text="${report.title}"></b><br/>
     Opis: <b th:text="${report.description}"></b><br/>
     <a class="btn btn-success" href="/reports">Wróc do listy</a>
 </div>
