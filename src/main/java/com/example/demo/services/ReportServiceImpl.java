@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.models.Patient;
 import com.example.demo.models.Report;
 import com.example.demo.repositories.ReportRepository;
 import org.springframework.data.domain.Page;
@@ -12,17 +13,17 @@ public class ReportServiceImpl implements ReportService {
     private ReportRepository reportRepository;
 
     @Override
-    public Page<Report> getAllAdvertisements(Pageable pageable) {
+    public Page<Report> getallReports(Pageable pageable) {
         return reportRepository.findAll(pageable);
     }
 
     @Override
-    public Page<Report> getAdvertisementsById(Long advertisement_id, Pageable pageable) {
+    public Page<Report> getReportsById(Long advertisement_id, Pageable pageable) {
         return null;
     }
 
     @Override
-    public Report getAdvertisement(Long id) {
+    public Report getReport(Long id) {
         return reportRepository.findById(id).orElse(null);
     }
 
@@ -32,8 +33,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void add(String title, String description) {
-
+    public void add(Patient patient, String title, String description) {
     }
 
     @Override
