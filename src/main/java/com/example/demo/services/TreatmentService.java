@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface TreatmentService {
     Page<Treatment> getAllTreatments(Pageable pageable);
 
@@ -13,11 +15,11 @@ public interface TreatmentService {
 
     Treatment getById(Long id);
 
+    List<Treatment> getAllTreatmentsList();
+
     void delete(Long id);
 
     boolean exists(Long id);
-
-    boolean isAssignedToAnyScheduledTreatment(Long id);
 
     Page<Treatment> getSearch(VehicleFilter search, Pageable pageable);
 

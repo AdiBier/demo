@@ -2,31 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="shared/header :: header-css"/>
-    <title>Pacjent</title>
+    <title>Ogłoszenie</title>
 </head>
 <body>
 <div th:replace="shared/header :: header('home')"/>
 
-<div class="container">
+<!--TODO ADRIAN-->
 
+<div class="container">
     <div class="row" style="margin-top:20px">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-            <form th:method="POST" th:object="${role}" th:action="'/roles/'+${action}">
+            <form th:method="POST" th:object="${report}" th:action="'/advertisements/'+${action}">
                 <fieldset>
-                    <h1 th:text="#{${action}}"></h1>
+                    <h1 th:text="${action}"></h1>
 
                     <div class="form-group">
-                        <input type="text" name="type" th:value="*{type}"
-                               class="form-control" th:classappend="${#fields.hasErrors('type')}?'is-invalid'"
-                               placeholder="Rola" required="true" autofocus="true"/>
-
-
-                        <div class="error text-danger" th:if="${#fields.hasErrors('type')}">
-                            <span th:each="err : ${#fields.errors('type')}" th:text="${err}"></span>
-                        </div>
+                        <input type="text" name="name" th:value="*{title}"
+                               class="form-control"
+                               placeholder="Tytuł ogłoszenia" required="true" autofocus="true"/>
                     </div>
 
-
+                    <div class="form-group">
+                        <input type="text" name="name" th:value="*{description}"
+                               class="form-control"
+                               placeholder="Treść ogłoszenia" required="true" autofocus="true"/>
+                    </div>
 
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
@@ -44,7 +44,7 @@
             </form>
         </div>
     </div>
-
 </div>
+
 </body>
 </html>

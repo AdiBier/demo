@@ -17,10 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
@@ -49,30 +46,20 @@ public class ReceiptsController {
         return "receipts/rdetails";
     }
 
-    @RequestMapping(value={"/receipts/add", "/receipts/edit"}, method= RequestMethod.GET)
+    @Secured("ROLE_ADMIN")
+    @RequestMapping(value={"/receipts/form"}, method= RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id){
-        Receipt receipt;
-        if(id.isPresent()){
-            model.addAttribute("action", "edit");
-            receipt = receiptService.getReceipt(id.get());
-        } else {
-            model.addAttribute("action", "add");
-            receipt = new Receipt();
-        }
-        model.addAttribute("receipt",receipt);
+        Receipt receipt = id.isPresent() ?
+                receiptService.getReceipt(id.get()) :
+                new Receipt();
+
+        model.addAttribute("receipt", receipt);
         return "receipts/rform";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_DENTIST"})
-    @RequestMapping(value={"/receipts/add", "/receipts/edit"}, method= RequestMethod.POST)
+    @Secured("ROLE_ADMIN")
+    @RequestMapping(value={"/receipts/form"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult errors){
-
-//        if(errors.hasErrors()){
-//            return "receipts/rform";
-//        }
-        if(receipt.getCreatedDate() == null){
-            receipt.setCreatedDate(new Date());
-        }
         if(receipt.getDentist().getId() == null){
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userName = authentication.getName();
@@ -84,28 +71,17 @@ public class ReceiptsController {
 
     @ModelAttribute("patientsList")
     public List<Patient> loadPatients(){
-        List<Patient> patients = patientService.getAllPatients2();
+        List<Patient> patients = patientService.getAllPatientsList();
         return patients;
     }
 
-    @RequestMapping(value="/receipts/delete")
+    @Secured("ROLE_ADMIN")
+    @GetMapping(value="/receipts/delete", params={"did"})
     public String delete(Model model, Long id){
 
         if(receiptService.exists(id)){
             receiptService.delete(id);
         }
         return "redirect:/receipts";
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {//Rejestrujemy edytory właściwości
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, false);
-        binder.registerCustomEditor(Date.class, "createdDate", dateEditor);
-
-        binder.setDisallowedFields("createdDate");//ze względu na bezpieczeństwo aplikacji to pole nie może zostać przesłane w formularzu
-
     }
 }

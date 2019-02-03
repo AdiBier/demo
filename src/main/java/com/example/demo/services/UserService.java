@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
 
     Page<User> getAllUsers(Pageable pageable);
@@ -25,4 +27,6 @@ public interface UserService extends UserDetailsService {
     boolean exists(Long id);
 
     boolean isUniqueLogin(String login);
+
+    List<User> getAllUsersList();
 }

@@ -12,7 +12,7 @@ public interface PatientService {
 
     Page<Patient> getAllPatients(Pageable pageable);
 
-    List<Patient> getAllPatients2();
+    List<Patient> getAllPatientsList();
 
     Patient getPatient(Long id);
 

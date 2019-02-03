@@ -86,7 +86,7 @@ public class UserController {
         patientService.savePatient(patient);
         user.setPatient(patient);
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
     @Secured("ROLE_ADMIN")
@@ -103,9 +103,12 @@ public class UserController {
         return queryString.substring(queryString.indexOf("&") + 1);//obcinamy parametr did, bo inaczej po przekierowaniu znowu będzie wywołana metoda deleteVihicle
     }
 
-    @RequestMapping(value = "/users/deactivate")
-    public String deactivate(Model model, Long id) {
-
+    @Secured("ROLE_ADMIN")
+    @RequestMapping(value = "/users/active")
+    public String toggleActive(Long id) {
+        User user = userService.getById(id);
+        user.setEnabled(!user.isEnabled());
+        userService.saveUser(user);
         return "redirect:/users";
     }
 

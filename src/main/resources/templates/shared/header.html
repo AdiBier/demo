@@ -18,27 +18,18 @@
     <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" th:href="@{/}" th:classappend="${pageName eq 'home'}?'active'">Gabinet Stomatologiczny Ząbek</a>
             </div>
 
             <div id="navbar" class="collapse navbar-collapse ">
-                <!--przyklad linku do listy i dodawania-->
-                <!--<ul class="nav navbar-nav navbar-left">-->
-                <!--<li th:class="${pageName eq 'vehicleList'}? 'active'">-->
-                <!--<a th:href="@{/vehicleList.html(all)}">Lista pojazdów</a>-->
-                <!--</li>-->
-                <!--<li sec:authorize="hasRole('ROLE_ADMIN')" th:class="${pageName eq 'custom'}? 'active'">-->
-                <!--<a th:href="@{/vehicleForm.html}">Dodaj pojazd</a>-->
-                <!--</li>-->
-                <!--</ul>-->
                 <ul class="nav navbar-nav navbar-left">
 
-                    <li sec:authorize="isAnonymous()"
-                        th:class="${pageName eq 'registerVisit'}? 'active'">
-                        <a th:href="@{/visits}">Rejestracja wizyty</a>
-                    </li>
-
-                    <li class="dropdown" sec:authorize="hasRole('ROLE_DENTIST')">
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Pacjenci<span class="caret"></span>
                         </a>
@@ -47,21 +38,21 @@
                                 <a th:href="@{/patients}">Wyświetl liste pacjentow</a>
                             </li>
                             <li>
-                                <a th:href="@{/patients/add}">Dodaj nowego pacjenta listy</a>
+                                <a th:href="@{/patients/form}">Dodaj nowego pacjenta listy</a>
                             </li>
                         </ul>
                     </li>
 
-                    <li class="dropdown" sec:authorize="hasRole('ROLE_DENTIST')">
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Wystaw recepte<span class="caret"></span>
+                            Recepty<span class="caret"></span>
                         </a>
                         <ul class="list-group dropdown-menu">
                             <li>
                                 <a th:href="@{/receipts}">Lista recept</a>
                             </li>
                             <li>
-                                <a th:href="@{/receipts/add}">Dodaj nową recepte</a>
+                                <a th:href="@{/receipts/form}">Dodaj nową recepte</a>
                             </li>
                         </ul>
                     </li>
@@ -82,24 +73,31 @@
                     </li>
                     <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Role<span class="caret"></span>
+                            Wizyty<span class="caret"></span>
                         </a>
                         <ul class="list-group dropdown-menu">
                             <li>
-                                <a th:href="@{/roles}">Wyświetl liste ról</a>
+                                <a th:href="@{/visits}">Wyświetl liste wizyt</a>
                             </li>
                             <li>
-                                <a th:href="@{/roles/add}">Dodaj nową rolę</a>
+                                <a th:href="@{/visits/form}">Dodaj nową wizytę</a>
                             </li>
                         </ul>
                     </li>
 
-                   <li sec:authorize="isAnonymous()">
-                        <a  th:href="@{/treatments}">
-                            Wyświetl cennik
+                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Raporty<span class="caret"></span>
                         </a>
+                        <ul class="list-group dropdown-menu">
+                            <li>
+                                <a th:href="@{/reports}">Wyświetl liste raportów</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/reports/form}">Dodaj nowy raport</a>
+                            </li>
+                        </ul>
                     </li>
-
 
                     <li sec:authorize="isAuthenticated()" class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -129,12 +127,6 @@
                         <label style="color:gold; margin-top: 15px;">
                             Witaj <span sec:authentication="name"/>!
                         </label>
-                    </li>
-
-                    <li sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a th:href="@{/advertisements}">
-                            Dodaj ogłoszenie
-                        </a>
                     </li>
 
                     <li sec:authorize="isAuthenticated()">

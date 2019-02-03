@@ -33,10 +33,10 @@
             <tr th:each="receipt : ${receiptsPage.content}">
 
                 <td>
-                    <a th:href="@{/receipts/details(id=${receipt.id})}" th:inline="text">[[${#dates.format(receipt.createdDate, 'dd-MM-yyyy HH:MM')}]]</a>
+                    <a th:href="@{/receipts/details(id=${receipt.id})}" th:inline="text">[[${#dates.format(receipt.createdDate, 'dd-MM-yyyy HH:mm')}]]</a>
                 </td>
                 <td>
-                    <a th:href="@{/receipts/details(id=${receipt.id})}" th:inline="text">[[${receipt.patient.firstName}]] [[${receipt.patient.lastName}]]</a>
+                    <a th:href="@{/receipts/details(id=${receipt.id})}" th:inline="text">[[${receipt.patient.firstName}]] [[${receipt.patient.lastName}]] ([[${receipt.patient.PESEL}]])</a>
                 </td>
                 <td>
                     <a th:href="@{/receipts/details(id=${receipt.id})}" th:inline="text">[[${receipt.dentist.patient.firstName}]] [[${receipt.dentist.patient.lastName}]]</a>
@@ -44,7 +44,7 @@
 
                 <td >
                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger" th:href="@{/receipts/delete(id=${receipt.id})}" th:text="Usuń"></a>
-                    <a class="btn btn-success" th:href="@{/receipts/edit(id=${receipt.id})}" th:text="Edytuj"></a>
+                    <a class="btn btn-success" th:href="@{/receipts/form(id=${receipt.id})}" th:text="Edytuj"></a>
 
                 </td>
 
@@ -59,7 +59,7 @@
 
 
 
-    <a class="btn btn-success" href="/receipts/add" > Dodaj Receptę </a>
+    <a class="btn btn-success" href="/receipts/form" > Dodaj Receptę </a>
 </div>
 </body>
 </html>

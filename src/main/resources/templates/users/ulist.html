@@ -26,8 +26,10 @@
             <thead class="thead-dark">
             <tr>
                 <th>Imie i nazwisko</th>
-                <th sec:authorize="hasRole('ROLE_DENTIST')">Nazwa uzytkownika</th>
-                <th sec:authorize="hasRole('ROLE_DENTIST')">Opcje</th>
+                <th>Nazwa uzytkownika</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">Role</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">Aktywny</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">Opcje</th>
             </tr>
             </thead>
             <tbody>
@@ -37,17 +39,23 @@
                     <a th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.patient.firstName + " " + user.patient.lastName}]]</a>
                 </td>
                 <td>
-                    <a sec:authorize="hasRole('ROLE_DENTIST')" th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.username}]]</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/details(id=${user.id})}" th:inline="text">[[${user.username}]]</a>
                 </td>
 
-                <td sec:authorize="hasRole('ROLE_DENTIST')">
+                <td sec:authorize="hasRole('ROLE_ADMIN')">
                     <span  th:each="role: ${user.roles}">
                         <span  th:text="${role.type}"/>
                     </span>
                 </td>
+                <td th:if="${user.enabled}">Dostępny</td>
+                <td th:unless="${user.enabled}">Niedostępny</td>
+
                 <td sec:authorize="hasRole('ROLE_ADMIN')" >
                     <a class="btn btn-danger" th:href="@{/users/delete(id=${user.id})}" th:text="Usuń"></a>
-                    <a class="btn btn-success" th:href="@{/users/edit(id=${user.id})}" th:text="Edytuj"></a>
+                    <a class="btn btn-success" th:href="@{/users/active(id=${user.id})}">
+                        <span th:if="${user.enabled}">Dezaktywuj</span>
+                        <span th:unless="${user.enabled}">Aktywuj</span>
+                    </a>
                 </td>
             </tr>
 
@@ -60,7 +68,7 @@
 
 
 
-    <a sec:authorize="hasRole('ROLE_DENTIST')" class="btn btn-success" href="/users/add" >Dodaj nowego użytkownika</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-success" href="/register" >Dodaj nowego użytkownika</a>
 </div>
 </body>
 </html>
