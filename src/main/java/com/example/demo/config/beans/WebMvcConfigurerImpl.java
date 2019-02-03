@@ -36,7 +36,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
         //jeśli strona domowa ma zawierać model, to trzeba napisać zwykły kontroler
         registry.addViewController("/").setViewName("home");
-        registry.addViewController("/error403").setViewName("errors/error403");
+        registry.addViewController("/error403").setViewName("templates/errors/error403");
     }
 
     @Bean

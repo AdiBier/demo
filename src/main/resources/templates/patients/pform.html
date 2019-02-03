@@ -22,7 +22,7 @@
 
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('firstName')}">
-                            <span th:each="err : ${#fields.errors('firstName')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('firstName')}" th:text="${err}"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -32,7 +32,7 @@
 
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('lastName')}">
-                            <span th:each="err : ${#fields.errors('lastName')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('lastName')}" th:text="${err}"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -42,7 +42,7 @@
 
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('PESEL')}">
-                            <span th:each="err : ${#fields.errors('PESEL')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('PESEL')}" th:text="${err}"></span>
                         </div>
                     </div>
 

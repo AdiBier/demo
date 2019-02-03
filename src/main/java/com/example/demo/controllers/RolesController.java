@@ -38,7 +38,7 @@ public class RolesController {
 
 
     }
-    @Secured("IS_AUTHENTICATED_FULLY")
+
     @RequestMapping(value="/roles/rlist", params = "id", method = RequestMethod.GET)
     public String showRoleDetails(Model model, Long id){
         //log.info("Pokazywanie szczegółów");
@@ -83,7 +83,7 @@ public class RolesController {
     @RequestMapping(value={"/roles/add", "/roles/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("role") Role role, BindingResult errors){
 
-//        if(errors.hasErrors()){
+//        if(templates.errors.hasErrors()){
 //            return "patients/form";
 //        }
         roleService.saveRole(role);

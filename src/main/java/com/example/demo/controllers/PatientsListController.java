@@ -29,17 +29,20 @@ public class PatientsListController {
     @Autowired
     private PatientService patientService;
 
+
     @RequestMapping(path = "/users/add")
     public String getAllPatients3(Model model){
         model.addAttribute("patient", patientService.getAllPatientsList());
         return "users/pform";
     }
 
+
     @RequestMapping(value="/patients")
     public String showPatientList(Model model, Pageable pageable){
         model.addAttribute("patientListPage", patientService.getAllPatients(pageable));
         return "patients/plist";
     }
+
 
     @RequestMapping(value={"/patients/form"}, method= RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id){
@@ -50,7 +53,7 @@ public class PatientsListController {
         return "patients/pform";
     }
 
-    @Secured({"ROLE_ADMIN"})
+
     @RequestMapping(value={"/patients/form"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("patient") Patient patient, Model model, BindingResult errors){
 
@@ -68,15 +71,6 @@ public class PatientsListController {
         if(patientService.exists(id)){
             patientService.delete(id);
         }
-        return "redirect:/patients";
-    }
-    private String prepareQueryString(String queryString) {//np., did=20&page=2&size=20
-        return queryString.substring(queryString.indexOf("&")+1);//obcinamy parametr did, bo inaczej po przekierowaniu znowu będzie wywołana metoda deleteVihicle
-    }
-
-    @RequestMapping(value="/patients/deactivate")
-    public String deactivate(Model model, Long id){
-
         return "redirect:/patients";
     }
 

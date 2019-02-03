@@ -33,6 +33,7 @@ public class UserController {
     @Autowired
     private PatientService patientService;
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/users", method = {RequestMethod.GET, RequestMethod.POST})
     public String showUserList(Model model, Pageable pageable) {
         model.addAttribute("userListPage", userService.getAllUsers(pageable));
@@ -40,7 +41,7 @@ public class UserController {
 
 
     }
-
+    @Secured("ROLE_ADMIN")
     @RequestMapping(path = "/users/details")
     public String details(Model model, Long id) {
         User user = userService.getUser(id);
@@ -48,7 +49,7 @@ public class UserController {
         return "users/udetails";
     }
 
-    @Secured("IS_AUTHENTICATED_FULLY")
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/users/ulist", params = "id", method = RequestMethod.GET)
     public String showUserDetails(Model model, Long id) {
         //log.info("Pokazywanie szczegółów");
@@ -58,7 +59,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = {"/users/add", "/users/edit", "/register"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id) {
         User user;
         Patient patient;
@@ -78,7 +79,7 @@ public class UserController {
         return "users/uform";
     }
 
-    @RequestMapping(value = {"/users/add","/users/edit", "/register"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("user") User user, @Valid @ModelAttribute("patient") Patient patient, BindingResult errors) {
         if (errors.hasErrors()) {
             return "users/uform";
@@ -86,7 +87,7 @@ public class UserController {
         patientService.savePatient(patient);
         user.setPatient(patient);
         userService.saveUser(user);
-        return "redirect:/";
+        return "users/registrationSuccess";
     }
 
     @Secured("ROLE_ADMIN")
@@ -97,10 +98,6 @@ public class UserController {
             userService.delete(id);
         }
         return "redirect:/users";
-    }
-
-    private String prepareQueryString(String queryString) {//np., did=20&page=2&size=20
-        return queryString.substring(queryString.indexOf("&") + 1);//obcinamy parametr did, bo inaczej po przekierowaniu znowu będzie wywołana metoda deleteVihicle
     }
 
     @Secured("ROLE_ADMIN")

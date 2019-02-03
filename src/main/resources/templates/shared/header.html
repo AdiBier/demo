@@ -43,7 +43,7 @@
                         </ul>
                     </li>
 
-                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Recepty<span class="caret"></span>
                         </a>
@@ -71,7 +71,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Wizyty<span class="caret"></span>
                         </a>
@@ -85,7 +85,7 @@
                         </ul>
                     </li>
 
-                    <li class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="dropdown" sec:authorize="isAuthenticated()">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Raporty<span class="caret"></span>
                         </a>

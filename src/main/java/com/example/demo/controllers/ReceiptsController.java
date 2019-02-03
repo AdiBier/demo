@@ -33,11 +33,13 @@ public class ReceiptsController {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(path = "/receipts")
     public String index(Model model, Pageable pageable) {
         model.addAttribute("receiptsPage", receiptService.getAllReceipts(pageable));
         return "receipts/rlist";
     }
+
 
     @RequestMapping(path = "/receipts/details")
     public String details(Model model, Long id) {
@@ -46,20 +48,23 @@ public class ReceiptsController {
         return "receipts/rdetails";
     }
 
-    @Secured("ROLE_ADMIN")
+
     @RequestMapping(value={"/receipts/form"}, method= RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id){
         Receipt receipt = id.isPresent() ?
                 receiptService.getReceipt(id.get()) :
                 new Receipt();
-
         model.addAttribute("receipt", receipt);
         return "receipts/rform";
     }
 
-    @Secured("ROLE_ADMIN")
+
     @RequestMapping(value={"/receipts/form"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("receipt") Receipt receipt, BindingResult errors){
+        if(receipt.getCreatedDate() == null)
+        {
+            receipt.setCreatedDate(new Date());
+        }
         if(receipt.getDentist().getId() == null){
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userName = authentication.getName();
@@ -76,12 +81,19 @@ public class ReceiptsController {
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping(value="/receipts/delete", params={"did"})
+    @GetMapping(value="/receipts/delete")
     public String delete(Model model, Long id){
 
         if(receiptService.exists(id)){
             receiptService.delete(id);
         }
         return "redirect:/receipts";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }
