@@ -24,7 +24,7 @@
 
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('user.username')}">
-                            <span th:each="err : ${#fields.errors('user.username')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('user.username')}" th:text="${err}"></span>
                         </div>
                     </div>
 
@@ -35,7 +35,7 @@
 
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('patient.firstName')}">
-                            <span th:each="err : ${#fields.errors('patient.firstName')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('patient.firstName')}" th:text="${err}"></span>
                         </div>
                     </div>
 
@@ -46,7 +46,18 @@
 
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('patient.lastName')}">
-                            <span th:each="err : ${#fields.errors('patient.lastName')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('patient.lastName')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="number" name="PESEL" th:value="*{patient.PESEL}"
+                               class="form-control" th:classappend="${#fields.hasErrors('patient.PESEL')}?'is-invalid'"
+                               placeholder="PESEL pacjenta" required="true" autofocus="true"/>
+
+
+                        <div class="error text-danger" th:if="${#fields.hasErrors('patient.PESEL')}">
+                            <span th:each="err : ${#fields.templates.errors('patient.PESEL')}" th:text="${err}"></span>
                         </div>
                     </div>
 
@@ -57,7 +68,7 @@
 
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('user.password')}">
-                            <span th:each="err : ${#fields.errors('user.password')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('user.password')}" th:text="${err}"></span>
                         </div>
                     </div>
                     <div class="row">

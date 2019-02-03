@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,12 +31,14 @@ public class TreatmentsController {
     @Autowired
     private TreatmentService treatmentService;
 
+
     @RequestMapping(path = "/treatments")
     public String index(Model model, Pageable pageable) {
         model.addAttribute("treatmentsPage", treatmentService.getAllTreatments(pageable));
 
         return "treatments/list";
     }
+
 
     @RequestMapping(path = "/treatments/details")
     public String details(Model model, Long id) {
@@ -45,6 +48,7 @@ public class TreatmentsController {
         return "treatments/details";
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value={"/treatments/add", "/treatments/edit"}, method= RequestMethod.GET)
     public String showForm(Model model, Optional<Long> id){
         Treatment treatment;
@@ -63,10 +67,11 @@ public class TreatmentsController {
         return "treatments/form";
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value={"/treatments/add", "/treatments/edit"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("treatment") Treatment treatment, BindingResult errors){
 
-//        if(errors.hasErrors()){
+//        if(templates.errors.hasErrors()){
 //            return "treatments/form";
 //        }
         Long id = treatment.getId();
@@ -85,6 +90,7 @@ public class TreatmentsController {
         return "redirect:/treatments";
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value="/treatments/change_active")
     public String changeActive(Long id){
 
@@ -95,6 +101,7 @@ public class TreatmentsController {
         return "redirect:/treatments";
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value="/treatments/delete")
     public String delete(Model model, Long id){
 

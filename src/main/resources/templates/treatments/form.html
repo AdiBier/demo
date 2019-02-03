@@ -21,7 +21,7 @@
                                placeholder="nazwa zabiegu" required="true" autofocus="true"/>
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('name')}">
-                            <span th:each="err : ${#fields.errors('name')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('name')}" th:text="${err}"></span>
                         </div>
                     </div>
 
@@ -31,7 +31,7 @@
                                placeholder="cena zabiegu" required="true" autofocus="true"/>
 
                         <div class="error text-danger" th:if="${#fields.hasErrors('price')}">
-                            <span th:each="err : ${#fields.errors('price')}" th:text="${err}"></span>
+                            <span th:each="err : ${#fields.templates.errors('price')}" th:text="${err}"></span>
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@
                             <!--<option th:value="false" th:text="#{treatment.active.false}"/>-->
                         </select>
                         <div class="error text-danger" th:if="${#fields.hasErrors('active')}">
-                            <p th:each="err : ${#fields.errors('active')}" th:text="${err}"></p>
+                            <p th:each="err : ${#fields.templates.errors('active')}" th:text="${err}"></p>
                         </div>
                     </div>
 

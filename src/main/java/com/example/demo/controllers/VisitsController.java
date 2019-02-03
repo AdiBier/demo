@@ -7,15 +7,20 @@ import com.example.demo.services.TreatmentService;
 import com.example.demo.services.UserService;
 import com.example.demo.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -51,12 +56,14 @@ public class VisitsController {
         return dentists;
     }
 
+
     @RequestMapping(path = "/visits")
     public String index(Model model, org.springframework.data.domain.Pageable pageable){
         model.addAttribute("visitsPage", visitService.getAllVisits(pageable));
 
         return "visits/vlist";
     }
+
 
     @RequestMapping(path = "/visits/details")
     public String details(Model model, Long id){
@@ -65,7 +72,8 @@ public class VisitsController {
 
         return "visits/vdetails";
     }
-    //edit/add
+
+
     @RequestMapping(value ={ "/visits/form"},method = RequestMethod.GET)
     public String showForm(Model model, Optional<Long>id){
         Visit visit;
@@ -77,6 +85,8 @@ public class VisitsController {
         model.addAttribute("visit",visit);
         return "visits/vform";
     }
+
+
     @RequestMapping(value={"/visits/form"}, method= RequestMethod.POST)
     public String processForm(@Valid @ModelAttribute("visit") Visit visit, BindingResult error){
 /*
@@ -93,6 +103,13 @@ public class VisitsController {
        return "redirect:/visits";
     }
 
+    @RequestMapping(value = "/visits/payment")
+    public String togglePayment(Long id) {
+        Visit visit = visitService.getVisit(id);
+        visit.setPaid(!visit.isPaid());
+        visitService.save(visit);
+        return "redirect:/visits";
+    }
 
 
     @RequestMapping(path = "/visits/delete")
@@ -102,6 +119,13 @@ public class VisitsController {
             visitService.delete(id);
         }
         return "redirect:/visits";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }

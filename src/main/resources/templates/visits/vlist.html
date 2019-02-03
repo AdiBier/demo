@@ -29,6 +29,7 @@
                 <th>Data wizyty</th>
                 <th>Do zapłaty</th>
                 <th>Zapłacono</th>
+                <th>Pacjent</th>
                 <th>Dentysta</th>
                 <th>Akcje</th>
             </tr>
@@ -36,14 +37,17 @@
             <tbody>
             <tr th:each="visit : ${visitsPage.content}">
 
-                <td th:inline="text">[[${#dates.format(visit.visitDate, 'dd-MM-yyyy HH:mm')}]]</td>
+                <td th:inline="text">[[${#dates.format(visit.visitDate, 'dd-MM-yyyy')}]]</td>
                 <td th:inline="text">[[${visit.getTotal()}]] zł</td>
-                <td th:inline="text">[[${visit.isPaid()}]]</td>
+                <td th:inline="text" th:if="${visit.paid}">Tak</td>
+                <td th:inline="text" th:unless="${visit.paid}">Nie</td>
+                <td th:inline="text">[[${visit.patient.firstName}]] [[${visit.patient.lastName}]]</td>
                 <td th:inline="text">[[${visit.dentist.patient.firstName}]] [[${visit.dentist.patient.lastName}]]</td>
-                <td >
+                <td>
+                    <a class="btn btn-info" th:href="@{/visits/details(id=${visit.id})}" th:text="Szczegóły"></a>
                     <a class="btn btn-danger" th:href="@{/visits/delete(id=${visit.id})}" th:text="Usuń"></a>
-                    <!--sec:authorize="hasRole('ROLE_ADMIN')"-->
                     <a class="btn btn-success" th:href="@{/visits/form(id=${visit.id})}" th:text="Edytuj"></a>
+                    <a class="btn btn-warning" th:href="@{/visits/payment(id=${visit.id})}">Zmień status płatności</a>
                 </td>
 
             </tr>
@@ -55,7 +59,7 @@
 
     </div>
 
-    <a class="btn btn-success" href="/visits/add">Dodaj Nową Wizytę</a>
+    <a class="btn btn-success" href="/visits/form">Dodaj Nową Wizytę</a>
 
 
 </div>
