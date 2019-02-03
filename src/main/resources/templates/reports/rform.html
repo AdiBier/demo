@@ -28,6 +28,17 @@
                             <p th:each="err : ${#fields.templates.errors('patient.id')}" th:text="${err}"></p>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                    <input type="text" name="description" th:field="*{title}"
+                              class="form-control" th:classappend="${#fields.hasErrors('title')}?'is-invalid'"
+                              placeholder="Tytuł raportu" required="true" autofocus="true"/>
+
+                    <div class="error text-danger" th:if="${#fields.hasErrors('title')}">
+                        <span th:each="err : ${#fields.templates.errors('title')}" th:text="${err}"></span>
+                    </div>
+                    </div>
+
                     <div class="form-group">
             <textarea type="text" name="description" th:field="*{description}"
                       class="form-control" th:classappend="${#fields.hasErrors('description')}?'is-invalid'"

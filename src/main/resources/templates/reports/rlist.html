@@ -6,6 +6,7 @@
 </head>
 <body>
 <div th:replace="shared/header :: header('home')"/>
+<div id="main" class="container">
 <H1>Lista Raportów</H1>
 
 <div th:if="${reportsPage.hasContent() eq false}">
@@ -14,33 +15,37 @@
 <div th:if="${reportsPage.hasContent() eq true}">
 
 <span th:inline="text">
-Baza zawiera [[${receiptsPage.totalElements}]] raportów
+Baza zawiera [[${reportsPage.totalElements}]] raportów
 </span>
 
     <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
             <th>Data wystawienia</th>
+            <th>Tytuł</th>
             <th>Pacjent</th>
             <th>Wystawiający</th>
             <th>Opcje</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="receipt : ${reportsPage.content}">
+        <tr th:each="report : ${reportsPage.content}">
 
             <td>
                 <a th:href="@{/reports/details(id=${report.id})}" th:inline="text">[[${#dates.format(report.createdDate, 'dd-MM-yyyy HH:mm')}]]</a>
             </td>
             <td>
-                <a th:href="@{/reports/details(id=${report.id})}" th:inline="text">[[${receipt.patient.firstName}]] [[${report.patient.lastName}]] ([[${report.patient.PESEL}]])</a>
+                <a th:href="@{/reports/details(id=${report.id})}" th:inline="text">[[${report.title}]]</a>
+            </td>
+            <td>
+                <a th:href="@{/reports/details(id=${report.id})}" th:inline="text">[[${report.patient.firstName}]] [[${report.patient.lastName}]] ([[${report.patient.PESEL}]])</a>
             </td>
             <td>
                 <a th:href="@{/reports/details(id=${report.id})}" th:inline="text">[[${report.user.patient.firstName}]] [[${report.user.patient.lastName}]]</a>
             </td>
 
             <td >
-                <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger" th:href="@{/reports/delete(id=${receipt.id})}" th:text="Usuń"></a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-danger" th:href="@{/reports/delete(id=${report.id})}" th:text="Usuń"></a>
                 <a class="btn btn-success" th:href="@{/reports/form(id=${report.id})}" th:text="Edytuj"></a>
 
             </td>
@@ -50,13 +55,13 @@ Baza zawiera [[${receiptsPage.totalElements}]] raportów
         </tbody>
     </table>
 
-    <div th:replace="shared/pagination :: pager('/patients', ${reportsPage})"></div>
+    <div th:replace="shared/pagination :: pager('/reports', ${reportsPage})"></div>
 
 </div>
 
 
 
-<a class="btn btn-success" href="/receipts/form" > Dodaj Raport </a>
+<a class="btn btn-success" href="/reports/form" > Dodaj Raport </a>
 </div>
 </body>
 </html>
