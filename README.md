@@ -29,4 +29,5 @@ App for more comfortable work in a dental office.
 - Lombok
 - Thymeleaf
 - Webjars
+- Maven
 
