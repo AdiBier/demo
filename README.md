@@ -1,8 +1,16 @@
 # Dentist Application
 
-## TODO STUFF 
+Aplikacja do wygodniejszej pracy w gabinecie dentystycznym. 
 
-#Important
+## Features
+
+- Register patient 
+- Report management 
+- Prescription management
+- Users management
+- Visits management and change status payment
+- Treatments management
+
 
 M.K >> 
 Rejestracja wizyt, 
