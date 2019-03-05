@@ -21,10 +21,12 @@ App for more comfortable work in a dental office.
 
 ## Technologies
 
-- 
-- 
-- 
+- Intellij IDEA
+- Git
+- Bootstrap
+- jQuery
+- PostgreSQL
+- Lombok
+- Thymeleaf
+- Webjars
 
-## What more? 
-> Fajnie byłoby zaimplementować generator PDF, np: jaskera //próbowałem to zrobić, ale mi nie wychodziło ;/
-Możliwę, że gdybym znowu spróbował ale w dzień to by może zadziałało :D 
